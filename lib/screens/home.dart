@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: Container(
                           alignment: Alignment.topLeft,
-                          height: 20,
+                          height: 21,
                           width: 20,
                           color: Colors.black,
                           child: Icon(
