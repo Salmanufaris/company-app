@@ -8,113 +8,182 @@ class Add_Screen extends StatefulWidget {
 }
 
 class _Add_ScreenState extends State<Add_Screen> {
-  String dropdownValue = 'male';
+  String dropdownvalue = 'Male';
+  var items = [
+    'Male',
+    'Female',
+    'Others',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: Container(
-          color: Colors.white,
-          height: 750,
-          width: 380,
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 80,
-              ),
-              Container(
-                alignment: Alignment.topRight,
-                height: 15,
-                width: 100,
-                color: Colors.amber,
-                child: InkWell(
-                  hoverColor: Colors.blue,
-                  splashColor: Colors.amber,
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Add_Screen()));
-                  },
-                  child: Icon(
-                    Icons.add,
-                    size: 15,
-                  ),
-                ),
-              ),
-              Text(
-                "Profile",
-                style: TextStyle(color: Colors.black, fontSize: 17),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 3,
-                  right: 150,
-                ),
-                child: DropdownButton<String>(
-                  value: dropdownValue,
-
-                  items: <String>['male', 'female', 'others']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    );
-                  }).toList(),
-                  // Step 5.
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
+        body: Center(
+            child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            CircleAvatar(
+              radius: 80,
+              backgroundColor: Colors.grey.shade300,
+            ),
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: AlertDialog(
+                          title: Text(
+                            "Which one you want?",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.brown),
+                          ),
+                          actions: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.camera_alt_outlined),
+                            ),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.image))
+                          ],
+                          actionsAlignment: MainAxisAlignment.center,
+                        ),
+                      );
                     });
-                  },
-                ),
+              },
+              color: Colors.amber,
+              splashColor: Colors.yellow,
+              icon: Icon(Icons.add),
+            ),
+            Container(
+              height: 30,
+              alignment: Alignment.center,
+              width: 150,
+              child: Text(
+                "Profile name",
               ),
-            ],
-          ),
-        ),
-      )),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade400,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Employee Id",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Full Name",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
+              ),
+            ),
+            DropdownButton(
+              // Initial Value
+              value: dropdownvalue,
+              underline: Container(
+                height: 2,
+                color: Colors.white,
+              ),
+              //icon
+              icon: const Icon(Icons.keyboard_arrow_down),
+
+              // Array list of items
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(
+                    items,
+                  ),
+                );
+              }).toList(),
+              // After selected  the  option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Address",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Email",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Phone",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5))),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text("Add"),
+            )
+          ],
+        )),
+      ),
     );
   }
 }

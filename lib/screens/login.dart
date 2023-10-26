@@ -1,4 +1,5 @@
 import 'package:app/screens/home.dart';
+import 'package:app/screens/onbody1.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,8 +31,37 @@ class _LoginScreenState extends State<LoginScreen> {
               CircleAvatar(
                 radius: 70,
                 backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.add,
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: AlertDialog(
+                              title: Text(
+                                "Which one you want?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.brown),
+                              ),
+                              actions: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.camera_alt_outlined),
+                                ),
+                                IconButton(
+                                    onPressed: () {}, icon: Icon(Icons.image))
+                              ],
+                              actionsAlignment: MainAxisAlignment.center,
+                            ),
+                          );
+                        });
+                  },
+                  child: Icon(
+                    Icons.add,
+                  ),
                 ),
               ),
               SizedBox(
@@ -51,8 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Screen1()));
                 },
                 child: Container(
                   height: 40,
