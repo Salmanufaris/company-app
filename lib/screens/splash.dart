@@ -17,19 +17,22 @@ class _MyWidgetState extends State<SplashScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue,
-        body: Center(
-          child: Image.asset(
-            "assets/images/logo3.jpg",
-            height: 100,
-            width: 100,
+      backgroundColor: Colors.blue,
+      body: Center(
+        child: Text(
+          " YOUR WELCOME",
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Future<void> gotoLoginpage() async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }

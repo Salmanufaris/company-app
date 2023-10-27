@@ -56,7 +56,7 @@ class _Add_ScreenState extends State<Edit_Screen> {
               },
               color: Colors.amber,
               splashColor: Colors.yellow,
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.edit),
             ),
             Container(
               height: 30,
@@ -174,7 +174,7 @@ class _Add_ScreenState extends State<Edit_Screen> {
             ),
             TextButton(
               onPressed: () {},
-              child: Text("Add"),
+              child: Text("Save"),
             )
           ],
         )),

@@ -1,4 +1,5 @@
 import 'package:app/screens/about.dart';
+import 'package:app/screens/login.dart';
 import 'package:app/screens/terms.dart';
 import 'package:flutter/material.dart';
 
@@ -49,9 +50,12 @@ class Settings_Screen extends StatelessWidget {
             InkWell(
               hoverColor: Colors.grey,
               splashColor: Colors.amber,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
               child: ListTile(
-                title: Text("Exit"),
+                title: Text("Logout"),
               ),
             ),
           ],

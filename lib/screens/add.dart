@@ -110,7 +110,10 @@ class _Add_ScreenState extends State<Add_Screen> {
               value: dropdownvalue,
               underline: Container(
                 height: 2,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
               ),
               //icon
               icon: const Icon(Icons.keyboard_arrow_down),

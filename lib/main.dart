@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App',
       home: SplashScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

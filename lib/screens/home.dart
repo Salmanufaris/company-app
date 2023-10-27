@@ -45,17 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 80,
               backgroundColor: Colors.grey.shade300,
             ),
-            IconButton(
-                hoverColor: Colors.white,
-                splashColor: Colors.white,
-                splashRadius: 20,
+            TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => Add_Screen()));
                 },
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.black,
+                child: Text(
+                  "Add",
+                  style: TextStyle(color: Colors.amber),
                 )),
             Container(
               alignment: Alignment.center,

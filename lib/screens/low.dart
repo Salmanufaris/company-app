@@ -8,6 +8,7 @@ class Low_screen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.grey.shade900,
             title: Text("Low Employees"),
             centerTitle: true,

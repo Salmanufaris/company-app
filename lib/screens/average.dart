@@ -8,6 +8,7 @@ class Average_screen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.grey.shade900,
             title: Text("Average Employees"),
             centerTitle: true,
