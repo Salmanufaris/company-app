@@ -1,4 +1,4 @@
-import 'package:app/screens/bottombar.dart';
+import 'package:app/widget/bottombar.dart';
 import 'package:app/screens/login.dart';
 import 'package:app/screens/splash.dart';
 

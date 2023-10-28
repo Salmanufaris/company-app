@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Add_Screen()));
+                      MaterialPageRoute(builder: (context) => AddScreen()));
                 },
                 child: Text(
                   "Add",

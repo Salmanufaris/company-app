@@ -1,4 +1,4 @@
-import 'package:app/screens/bottombar.dart';
+import 'package:app/widget/bottombar.dart';
 import 'package:app/screens/home.dart';
 import 'package:flutter/material.dart';
 

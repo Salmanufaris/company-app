@@ -1,5 +1,5 @@
 import 'package:app/screens/home.dart';
-import 'package:app/screens/onbody1.dart';
+import 'package:app/screens/subscreens/onbody1.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
