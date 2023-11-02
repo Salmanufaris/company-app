@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Average_screen extends StatelessWidget {
-  const Average_screen({super.key});
+class Averagescreen extends StatelessWidget {
+  const Averagescreen({super.key});
 
   @override
   Widget build(BuildContext context) {

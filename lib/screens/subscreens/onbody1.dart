@@ -27,8 +27,8 @@ class _Screen1State extends State<Screen1> {
                 alignment: Alignment(0, 0.75),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: ((context) => HomeScreen())));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: ((context) => Screen1())));
                     },
                     child: Container(
                         child: SmoothPageIndicator(

@@ -1,3 +1,4 @@
+import 'package:app/Model/model.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:app/screens/home.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,14 @@ class IntroScreen2 extends StatelessWidget {
                           TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => BottomBar()));
+                                    builder: (context) => BottomBar1(
+                                        employee: EmployeeList(
+                                            id: '',
+                                            name: '',
+                                            gender: "",
+                                            adress: "",
+                                            email: "",
+                                            phone: ""))));
                               },
                               child: Text(
                                 "Next Page",

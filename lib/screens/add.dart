@@ -1,194 +1,279 @@
+import 'dart:io';
+
+import 'package:app/Model/model.dart';
+import 'package:app/db/functions.dart';
+
+import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  AddScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddScreen> createState() => _Add_ScreenState();
+  State<AddScreen> createState() => _AddScreenState();
 }
 
-class _Add_ScreenState extends State<AddScreen> {
+class _AddScreenState extends State<AddScreen> {
+  final _idController = TextEditingController();
+
+  final _nameController = TextEditingController();
+
+  final _adressController = TextEditingController();
+
+  final _genderController = TextEditingController();
+
+  final _emailController = TextEditingController();
+
+  final _phoneController = TextEditingController();
   String dropdownvalue = 'Male';
+
+  // List of items in our dropdown menu
   var items = [
     'Male',
     'Female',
-    'Others',
+    'others',
   ];
+  String selectedvalue = "";
+  XFile? pickedImage;
+
+  Future<void> _pickImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick Image From...'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await ImageUtils.pickImage(ImageSource.camera);
+                  setState(() {
+                    pickedImage = picked;
+                  });
+                },
+                child: const Text('Camera'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await ImageUtils.pickImage(ImageSource.gallery);
+                  setState(() {
+                    pickedImage = picked;
+                  });
+                },
+                child: const Text('Gallery'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-              child: Column(
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
             children: [
+              SizedBox(
+                height: 5,
+              ),
+              GestureDetector(
+                onTap: () {
+                  radius:
+                  100;
+                  backgroundImage:
+                  pickedImage != null
+                      ? FileImage(File(pickedImage!.path))
+                      : null;
+                  backgroundColor:
+                  Colors.grey[200];
+                  child:
+                  pickedImage == null
+                      ? Icon(
+                          Icons.camera_alt,
+                          size: 80,
+                          color: Colors.grey[800],
+                        )
+                      : null;
+                },
+                child: CircleAvatar(
+                  radius: 80,
+                ),
+              ),
+              Text("Profile name"),
               SizedBox(
                 height: 10,
               ),
-              CircleAvatar(
-                radius: 80,
-                backgroundColor: Colors.grey.shade300,
-              ),
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: AlertDialog(
-                            title: Text(
-                              "Which one you want?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.brown),
-                            ),
-                            actions: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.camera_alt_outlined),
-                              ),
-                              IconButton(
-                                  onPressed: () {}, icon: Icon(Icons.image))
-                            ],
-                            actionsAlignment: MainAxisAlignment.center,
-                          ),
-                        );
-                      });
-                },
-                color: Colors.amber,
-                splashColor: Colors.yellow,
-                icon: Icon(Icons.add),
-              ),
-              Container(
-                height: 30,
-                alignment: Alignment.center,
-                width: 150,
-                child: Text(
-                  "Profile name",
+              Padding(
+                padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
+                child: TextFormField(
+                  controller: _idController,
+                  decoration: InputDecoration(
+                      hintText: 'Id',
+                      fillColor: const Color.fromARGB(255, 231, 230, 230),
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey.shade400,
-                ),
-              ),
-              SizedBox(
-                height: 30,
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
+                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                 child: TextFormField(
+                  controller: _nameController,
                   decoration: InputDecoration(
-                      hintText: "Employee Id",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintText: 'Full Name',
+                      fillColor: Color.fromARGB(255, 231, 230, 230),
+                      filled: true,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
+                          borderRadius: BorderRadius.circular(10))),
                 ),
-              ),
-              SizedBox(
-                height: 20,
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
+                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                 child: TextFormField(
+                  controller: _adressController,
                   decoration: InputDecoration(
-                      hintText: "Full Name",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintText: 'Adress',
+                      fillColor: Color.fromARGB(255, 231, 230, 230),
+                      filled: true,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               DropdownButton(
                 // Initial Value
                 value: dropdownvalue,
-                underline: Container(
-                  height: 2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
-                //icon
+
+                // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down),
 
                 // Array list of items
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(
-                      items,
-                    ),
+                    child: Text(items),
                   );
                 }).toList(),
-                // After selected  the  option,it will
+                // After selecting the desired option,it will
                 // change button value to selected value
                 onChanged: (String? newValue) {
                   setState(() {
                     dropdownvalue = newValue!;
+                    _genderController.text = newValue;
                   });
                 },
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
+                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                 child: TextFormField(
+                  controller: _genderController,
                   decoration: InputDecoration(
-                      hintText: "Address",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintText: selectedvalue,
+                      fillColor: Color.fromARGB(255, 231, 230, 230),
+                      filled: true,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 8,
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Email",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  child: TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                        hintText: 'Email',
+                        fillColor: Color.fromARGB(255, 231, 230, 230),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  )),
               Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Phone",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text("Add"),
-              )
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  child: TextFormField(
+                    controller: _phoneController,
+                    decoration: InputDecoration(
+                        hintText: 'phone',
+                        fillColor: Color.fromARGB(255, 231, 230, 230),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  )),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    onAddStudentButtonClicked(context);
+                  },
+                  icon: Icon(Icons.add),
+                  label: Text('save'))
             ],
-          )),
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> onAddStudentButtonClicked(BuildContext context) async {
+    final _id = _idController.text.trim();
+    final _name = _nameController.text.trim();
+    final _adress = _adressController.text.trim();
+    final _gender = _genderController.text.trim();
+    final _email = _emailController.text.trim();
+    final _phone = _phoneController.text.trim();
+    if (_id.isEmpty ||
+        _name.isEmpty ||
+        _gender.isEmpty ||
+        _email.isEmpty ||
+        _phone.isEmpty) {
+      return;
+    } else {
+      final employee = (
+        id: _id,
+        number: _name,
+        adress: _adress,
+        gender: _gender,
+        email: _email,
+        phone: _phone
+      );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BottomBar1(
+                  employee: EmployeeList(
+                      id: '',
+                      name: '',
+                      adress: '',
+                      gender: "",
+                      email: "",
+                      phone: ""),
+                )),
+      );
+    }
+    print('$_id $_name');
+    final _employee = EmployeeList(
+        id: _id,
+        name: _name,
+        adress: _adress,
+        gender: _gender,
+        email: _email,
+        phone: _phone);
+
+    addEmployee(_employee);
+  }
+}
+
+class ImageUtils {
+  static Future<XFile?> pickImage(ImageSource source) async {
+    final ImagePicker imagePicker = ImagePicker();
+    final picked = await imagePicker.pickImage(source: source);
+    return picked;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app/Model/model.dart';
 import 'package:app/screens/average.dart';
 import 'package:app/screens/best.dart';
 import 'package:app/screens/chart.dart';
@@ -5,20 +6,25 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/low.dart';
 import 'package:flutter/material.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class BottomBar1 extends StatefulWidget {
+  BottomBar1({
+    super.key,
+    required EmployeeList employee,
+  });
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<BottomBar1> createState() => _BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _BottomBarState extends State<BottomBar1> {
   int _currentindex = 0;
 
-  final List _screens = [
-    HomeScreen(),
+  final screens = [
+    HomeScreen(
+        employee: EmployeeList(
+            id: '', name: '', adress: '', gender: '', email: '', phone: '')),
     Best_screen(),
-    Average_screen(),
+    Averagescreen(),
     Low_screen(),
     Chart_screen(),
   ];
@@ -26,7 +32,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentindex],
+      body: screens[_currentindex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
 

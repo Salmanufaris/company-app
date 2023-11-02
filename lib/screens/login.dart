@@ -1,107 +1,126 @@
-import 'package:app/screens/home.dart';
+import 'dart:io';
+
 import 'package:app/screens/subscreens/onbody1.dart';
+import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  XFile? pickedImage;
+
+  Future<void> _pickImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick Image From...'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await ImageUtils.pickImage(ImageSource.camera);
+                  setState(() {
+                    pickedImage = picked;
+                  });
+                },
+                child: const Text('Camera'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await ImageUtils.pickImage(ImageSource.gallery);
+                  setState(() {
+                    pickedImage = picked;
+                  });
+                },
+                child: const Text('Gallery'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      body: Container(
-        height: double.infinity,
-        color: Colors.grey.shade300,
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Container(
-          height: 600,
-          width: 350,
-          color: Colors.grey.shade300,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 120,
-              ),
-              CircleAvatar(
-                radius: 70,
-                backgroundColor: Colors.white,
-                child: InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: AlertDialog(
-                              title: Text(
-                                "Which one you want?",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.brown),
-                              ),
-                              actions: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.camera_alt_outlined),
-                                ),
-                                IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.image))
-                              ],
-                              actionsAlignment: MainAxisAlignment.center,
-                            ),
-                          );
-                        });
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: 400,
+                  width: 200,
+                  color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      _pickImage();
+                    },
+                    child: CircleAvatar(
+                      radius: 100,
+                      backgroundImage: pickedImage != null
+                          ? FileImage(File(pickedImage!.path))
+                          : null,
+                      backgroundColor: Colors.grey[200],
+                      child: pickedImage == null
+                          ? Icon(
+                              Icons.camera_alt,
+                              size: 80,
+                              color: Colors.grey[800],
+                            )
+                          : null,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Company name",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Screen1()));
                   },
-                  child: Icon(
-                    Icons.add,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: "Company name",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20))),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Screen1()));
-                },
-                child: Container(
-                  height: 40,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.green,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Lets go",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
-              )
-            ],
+                  child: Text("Login"),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+class ImageUtils {
+  static Future<XFile?> pickImage(ImageSource source) async {
+    final ImagePicker imagePicker = ImagePicker();
+    final picked = await imagePicker.pickImage(source: source);
+    return picked;
+  }
+}
+
+void main() => runApp(MaterialApp(home: LoginScreen()));
