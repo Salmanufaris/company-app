@@ -14,13 +14,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   XFile? pickedImage;
+  final _formkey = GlobalKey<FormState>();
 
   Future<void> _pickImage() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pick Image From...'),
+          title: const Text('Which one  you want...'),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -28,23 +29,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   Navigator.pop(context);
                   XFile? picked =
-                      await ImageUtils.pickImage(ImageSource.camera);
+                      await Imagebringing.pickImage(ImageSource.camera);
                   setState(() {
                     pickedImage = picked;
                   });
                 },
-                child: const Text('Camera'),
+                child: const Text(
+                  'Camera',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               ElevatedButton(
                 onPressed: () async {
                   Navigator.pop(context);
                   XFile? picked =
-                      await ImageUtils.pickImage(ImageSource.gallery);
+                      await Imagebringing.pickImage(ImageSource.gallery);
                   setState(() {
                     pickedImage = picked;
                   });
                 },
-                child: const Text('Gallery'),
+                child: const Text(
+                  'Gallery',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -57,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.teal[900],
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -67,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.bottomCenter,
                   height: 400,
                   width: 200,
-                  color: Colors.white,
+                  color: Colors.teal[900],
                   child: GestureDetector(
                     onTap: () {
                       _pickImage();
@@ -90,21 +97,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(10),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Company name",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+                  child: Form(
+                    key: _formkey,
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Enter company name";
+                        }
+                      },
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "Company name",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
                     ),
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Screen1()));
+                    if (_formkey.currentState!.validate()) {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Screen1()));
+                    }
                   },
-                  child: Text("Login"),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
               ],
             ),
@@ -115,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class ImageUtils {
+class Imagebringing {
   static Future<XFile?> pickImage(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     final picked = await imagePicker.pickImage(source: source);
@@ -123,4 +145,4 @@ class ImageUtils {
   }
 }
 
-void main() => runApp(MaterialApp(home: LoginScreen()));
+// void main() => runApp(MaterialApp(home: LoginScreen()));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Low_screen extends StatelessWidget {
-  const Low_screen({super.key});
+class Lowscreen extends StatelessWidget {
+  const Lowscreen({super.key});
 
   @override
   Widget build(BuildContext context) {

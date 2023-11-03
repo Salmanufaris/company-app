@@ -3,8 +3,8 @@ import 'package:app/screens/login.dart';
 import 'package:app/screens/terms.dart';
 import 'package:flutter/material.dart';
 
-class Settings_Screen extends StatelessWidget {
-  const Settings_Screen({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

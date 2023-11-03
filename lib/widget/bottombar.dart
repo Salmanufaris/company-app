@@ -1,4 +1,4 @@
-import 'package:app/Model/model.dart';
+import 'package:app/Model/data_model.dart';
 import 'package:app/screens/average.dart';
 import 'package:app/screens/best.dart';
 import 'package:app/screens/chart.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class BottomBar1 extends StatefulWidget {
   BottomBar1({
     super.key,
-    required EmployeeList employee,
+    // required EmployeeModel employee,
   });
 
   @override
@@ -21,12 +21,12 @@ class _BottomBarState extends State<BottomBar1> {
 
   final screens = [
     HomeScreen(
-        employee: EmployeeList(
+        employee: EmployeeModel(
             id: '', name: '', adress: '', gender: '', email: '', phone: '')),
-    Best_screen(),
+    Bestscreen(),
     Averagescreen(),
-    Low_screen(),
-    Chart_screen(),
+    Lowscreen(),
+    Chartscreen(),
   ];
 
   @override

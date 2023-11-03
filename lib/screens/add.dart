@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/Model/model.dart';
+import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 
 import 'package:app/widget/bottombar.dart';
@@ -50,7 +50,7 @@ class _AddScreenState extends State<AddScreen> {
                 onPressed: () async {
                   Navigator.pop(context);
                   XFile? picked =
-                      await ImageUtils.pickImage(ImageSource.camera);
+                      await Imagebringing.pickImage(ImageSource.camera);
                   setState(() {
                     pickedImage = picked;
                   });
@@ -61,7 +61,7 @@ class _AddScreenState extends State<AddScreen> {
                 onPressed: () async {
                   Navigator.pop(context);
                   XFile? picked =
-                      await ImageUtils.pickImage(ImageSource.gallery);
+                      await Imagebringing.pickImage(ImageSource.gallery);
                   setState(() {
                     pickedImage = picked;
                   });
@@ -86,32 +86,30 @@ class _AddScreenState extends State<AddScreen> {
               SizedBox(
                 height: 5,
               ),
-              GestureDetector(
-                onTap: () {
-                  radius:
-                  100;
-                  backgroundImage:
-                  pickedImage != null
-                      ? FileImage(File(pickedImage!.path))
-                      : null;
-                  backgroundColor:
-                  Colors.grey[200];
-                  child:
-                  pickedImage == null
-                      ? Icon(
-                          Icons.camera_alt,
-                          size: 80,
-                          color: Colors.grey[800],
-                        )
-                      : null;
-                },
-                child: CircleAvatar(
-                  radius: 80,
+              Container(
+                alignment: Alignment.bottomCenter,
+                height: 160,
+                width: 170,
+                color: Colors.white,
+                child: GestureDetector(
+                  onTap: () {
+                    _pickImage();
+                  },
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundImage: pickedImage != null
+                        ? FileImage(File(pickedImage!.path))
+                        : null,
+                    backgroundColor: Colors.grey[200],
+                    child: pickedImage == null
+                        ? Icon(
+                            Icons.camera_alt,
+                            size: 80,
+                            color: Colors.grey[800],
+                          )
+                        : null,
+                  ),
                 ),
-              ),
-              Text("Profile name"),
-              SizedBox(
-                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
@@ -152,8 +150,9 @@ class _AddScreenState extends State<AddScreen> {
               DropdownButton(
                 // Initial Value
                 value: dropdownvalue,
+                dropdownColor: Colors.grey,
+                borderRadius: BorderRadius.circular(40),
 
-                // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down),
 
                 // Array list of items
@@ -178,6 +177,7 @@ class _AddScreenState extends State<AddScreen> {
                   controller: _genderController,
                   decoration: InputDecoration(
                       hintText: selectedvalue,
+                      labelText: "Gender",
                       fillColor: Color.fromARGB(255, 231, 230, 230),
                       filled: true,
                       border: OutlineInputBorder(
@@ -214,7 +214,7 @@ class _AddScreenState extends State<AddScreen> {
                     onAddStudentButtonClicked(context);
                   },
                   icon: Icon(Icons.add),
-                  label: Text('save'))
+                  label: Text('Add', style: TextStyle(color: Colors.amber)))
             ],
           ),
         ),
@@ -245,32 +245,24 @@ class _AddScreenState extends State<AddScreen> {
         phone: _phone
       );
       Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BottomBar1(
-                  employee: EmployeeList(
-                      id: '',
-                      name: '',
-                      adress: '',
-                      gender: "",
-                      email: "",
-                      phone: ""),
-                )),
+        MaterialPageRoute(builder: (context) => BottomBar1()),
       );
     }
-    print('$_id $_name');
-    final _employee = EmployeeList(
-        id: _id,
-        name: _name,
-        adress: _adress,
-        gender: _gender,
-        email: _email,
-        phone: _phone);
+
+    final _employee = EmployeeModel(
+      id: _id,
+      name: _name,
+      adress: _adress,
+      gender: _gender,
+      email: _email,
+      phone: _phone,
+    );
 
     addEmployee(_employee);
   }
 }
 
-class ImageUtils {
+class Imagebringing {
   static Future<XFile?> pickImage(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     final picked = await imagePicker.pickImage(source: source);

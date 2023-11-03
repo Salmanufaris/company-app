@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class Chart_screen extends StatefulWidget {
+class Chartscreen extends StatefulWidget {
   @override
-  State<Chart_screen> createState() => _Chart_screenState();
+  State<Chartscreen> createState() => _Chart_screenState();
 }
 
-class _Chart_screenState extends State<Chart_screen> {
+class _Chart_screenState extends State<Chartscreen> {
   late List<GDPData> _Chartdata;
 
   @override

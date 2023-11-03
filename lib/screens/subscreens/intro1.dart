@@ -6,18 +6,16 @@ class IntroScree1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
+      backgroundColor: Colors.indigo[900],
       body: Center(
         child: Container(
           alignment: Alignment.bottomCenter,
           height: 100,
           width: 360,
-          color: Colors.grey.shade400,
+          color: Colors.indigo[900],
           child: Text(
             "START YOUR JOURNEY",
-            style: TextStyle(
-              fontSize: 25,
-            ),
+            style: TextStyle(fontSize: 25, color: Colors.white),
           ),
         ),
       ),
