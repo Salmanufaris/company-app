@@ -7,10 +7,14 @@ class Lowscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.teal[500],
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.grey.shade900,
-            title: Text("Low Employees"),
+            backgroundColor: Colors.teal[300],
+            title: Text(
+              "Low Employees",
+              style: TextStyle(color: Colors.black),
+            ),
             centerTitle: true,
           ),
           body: Padding(
@@ -20,7 +24,7 @@ class Lowscreen extends StatelessWidget {
               width: 380,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
-                color: Colors.grey.shade700,
+                color: Colors.teal[600],
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -88,7 +92,7 @@ class Lowscreen extends StatelessWidget {
       width: 350,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        color: Colors.grey.shade200,
+        color: Colors.teal[100],
       ),
       child: Text(
         id,

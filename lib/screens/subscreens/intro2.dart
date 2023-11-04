@@ -9,18 +9,18 @@ class IntroScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo[900],
+      backgroundColor: Colors.teal[300],
       body: Center(
         child: Container(
           height: 650,
           width: 400,
-          color: Colors.indigo[900],
+          color: Colors.teal[300],
           child: Column(
             children: [
               Container(
                 height: 400,
                 width: 400,
-                color: Colors.indigo[900],
+                color: Colors.teal[300],
                 child: Column(
                   children: [
                     SizedBox(
@@ -28,14 +28,14 @@ class IntroScreen2 extends StatelessWidget {
                     ),
                     Text(
                       "INCREASE YOUR SKILL",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                      style: TextStyle(fontSize: 25, color: Colors.black),
                     ),
                     SizedBox(
                       height: 30,
                     ),
                     Text(
                       "AND PERFOMANCE",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                      style: TextStyle(fontSize: 25, color: Colors.black),
                     )
                   ],
                 ),
@@ -43,14 +43,14 @@ class IntroScreen2 extends StatelessWidget {
               Container(
                 height: 250,
                 width: 400,
-                color: Colors.indigo[900],
+                color: Colors.teal[300],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       height: 50,
                       width: 390,
-                      color: Colors.indigo[900],
+                      color: Colors.teal[300],
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

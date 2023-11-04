@@ -1,4 +1,3 @@
-import 'package:app/screens/home.dart';
 import 'package:app/screens/subscreens/intro1.dart';
 import 'package:app/screens/subscreens/intro2.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class _Screen1State extends State<Screen1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue.shade900,
+        backgroundColor: Colors.teal[300],
         body: Stack(
           children: [
             PageView(
@@ -32,7 +31,12 @@ class _Screen1State extends State<Screen1> {
                     },
                     child: Container(
                         child: SmoothPageIndicator(
-                            controller: _controller, count: 2)))),
+                            effect: ColorTransitionEffect(
+                                radius: BorderSide.strokeAlignCenter,
+                                activeDotColor: Colors.black,
+                                dotColor: Colors.teal),
+                            controller: _controller,
+                            count: 2)))),
           ],
         ));
   }

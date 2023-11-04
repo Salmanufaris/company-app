@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.teal,
           title: const Text('Which one  you want...'),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.teal[900],
+        backgroundColor: Colors.teal[500],
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -74,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.bottomCenter,
                   height: 400,
                   width: 200,
-                  color: Colors.teal[900],
+                  color: Colors.teal[500],
                   child: GestureDetector(
                     onTap: () {
                       _pickImage();
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundImage: pickedImage != null
                           ? FileImage(File(pickedImage!.path))
                           : null,
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: Colors.white,
                       child: pickedImage == null
                           ? Icon(
                               Icons.camera_alt,
@@ -119,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                   onPressed: () {
                     if (_formkey.currentState!.validate()) {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => Screen1()));
                     }
                   },

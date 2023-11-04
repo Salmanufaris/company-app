@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.teal[300],
           leading: Icon(
             Icons.search,
           ),
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Text(
                   "Settings",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ))
           ],
         ),
@@ -128,10 +128,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20)),
                               color: Colors.teal[200],
                               child: ListTile(
-                                title: Text(data.id),
+                                title: Text(
+                                  data.id,
+                                  style: TextStyle(color: Colors.black),
+                                ),
                                 subtitle: Text(
                                   data.name,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.black),
                                 ),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -167,21 +170,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                       value: dropdownvalue,
                                       underline: Container(
-                                        color: Colors.grey,
+                                        color: Colors.teal[300],
                                       ),
                                       // Down Arrow Icon
                                       icon: Icon(
                                         Icons.keyboard_arrow_down,
                                         color: Colors.black,
                                       ),
-                                      dropdownColor: Colors.black,
+                                      dropdownColor: Colors.teal[300],
 
                                       style: TextStyle(fontSize: 7),
                                       // Array list of items
                                       items: items.map((String items) {
                                         return DropdownMenuItem(
                                           value: items,
-                                          child: Text(items),
+                                          child: Text(
+                                            items,
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
                                         );
                                       }).toList(),
                                       // After selecting the desired option,it will

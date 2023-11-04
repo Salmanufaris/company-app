@@ -42,7 +42,8 @@ class _AddScreenState extends State<AddScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pick Image From...'),
+          backgroundColor: Colors.teal[300],
+          title: const Text('Whic one you want '),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -77,145 +78,149 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                height: 160,
-                width: 170,
-                color: Colors.white,
-                child: GestureDetector(
-                  onTap: () {
-                    _pickImage();
-                  },
-                  child: CircleAvatar(
-                    radius: 80,
-                    backgroundImage: pickedImage != null
-                        ? FileImage(File(pickedImage!.path))
-                        : null,
-                    backgroundColor: Colors.grey[200],
-                    child: pickedImage == null
-                        ? Icon(
-                            Icons.camera_alt,
-                            size: 80,
-                            color: Colors.grey[800],
-                          )
-                        : null,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.teal[300],
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: 160,
+                  width: 170,
+                  color: Colors.teal[300],
+                  child: GestureDetector(
+                    onTap: () {
+                      _pickImage();
+                    },
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundImage: pickedImage != null
+                          ? FileImage(File(pickedImage!.path))
+                          : null,
+                      backgroundColor: Colors.grey[200],
+                      child: pickedImage == null
+                          ? Icon(
+                              Icons.camera_alt,
+                              size: 80,
+                              color: Colors.grey[800],
+                            )
+                          : null,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
-                child: TextFormField(
-                  controller: _idController,
-                  decoration: InputDecoration(
-                      hintText: 'Id',
-                      fillColor: const Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                Padding(
+                  padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
+                  child: TextFormField(
+                    controller: _idController,
+                    decoration: InputDecoration(
+                        hintText: 'Id',
+                        fillColor: const Color.fromARGB(255, 231, 230, 230),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      fillColor: Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: TextFormField(
-                  controller: _adressController,
-                  decoration: InputDecoration(
-                      hintText: 'Adress',
-                      fillColor: Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              DropdownButton(
-                // Initial Value
-                value: dropdownvalue,
-                dropdownColor: Colors.grey,
-                borderRadius: BorderRadius.circular(40),
-
-                icon: const Icon(Icons.keyboard_arrow_down),
-
-                // Array list of items
-                items: items.map((String items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items),
-                  );
-                }).toList(),
-                // After selecting the desired option,it will
-                // change button value to selected value
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownvalue = newValue!;
-                    _genderController.text = newValue;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: TextFormField(
-                  controller: _genderController,
-                  decoration: InputDecoration(
-                      hintText: selectedvalue,
-                      labelText: "Gender",
-                      fillColor: Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
+                Padding(
                   padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                   child: TextFormField(
-                    controller: _emailController,
+                    controller: _nameController,
                     decoration: InputDecoration(
-                        hintText: 'Email',
+                        hintText: 'Full Name',
                         fillColor: Color.fromARGB(255, 231, 230, 230),
                         filled: true,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
-                  )),
-              Padding(
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
                   child: TextFormField(
-                    controller: _phoneController,
+                    controller: _adressController,
                     decoration: InputDecoration(
-                        hintText: 'phone',
+                        hintText: 'Adress',
                         fillColor: Color.fromARGB(255, 231, 230, 230),
                         filled: true,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
-                  )),
-              ElevatedButton.icon(
-                  onPressed: () {
-                    onAddStudentButtonClicked(context);
+                  ),
+                ),
+                DropdownButton(
+                  // Initial Value
+                  value: dropdownvalue,
+                  dropdownColor: Colors.teal[300],
+                  borderRadius: BorderRadius.circular(40),
+
+                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                      _genderController.text = newValue;
+                    });
                   },
-                  icon: Icon(Icons.add),
-                  label: Text('Add', style: TextStyle(color: Colors.amber)))
-            ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  child: TextFormField(
+                    controller: _genderController,
+                    decoration: InputDecoration(
+                        hintText: selectedvalue,
+                        labelText: "Gender",
+                        fillColor: Color.fromARGB(255, 231, 230, 230),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 30, right: 30),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          hintText: 'Email',
+                          fillColor: Color.fromARGB(255, 231, 230, 230),
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    )),
+                Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 30, right: 30),
+                    child: TextFormField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                          hintText: 'phone',
+                          fillColor: Color.fromARGB(255, 231, 230, 230),
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    )),
+                ElevatedButton.icon(
+                    onPressed: () {
+                      onAddStudentButtonClicked(context);
+                    },
+                    icon: Icon(Icons.add),
+                    label: Text('Add', style: TextStyle(color: Colors.amber)))
+              ],
+            ),
           ),
         ),
       ),

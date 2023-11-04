@@ -17,7 +17,7 @@ class _MyWidgetState extends State<SplashScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[900],
+      backgroundColor: Colors.teal[500],
       body: Center(
         child: Text(
           " YOUR WELCOME",
@@ -32,7 +32,7 @@ class _MyWidgetState extends State<SplashScreen> {
 
   Future<void> gotoLoginpage() async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
