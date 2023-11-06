@@ -21,6 +21,9 @@ class EmployeeModel {
   @HiveField(5)
   final String phone;
 
+  @HiveField(6)
+  final String image;
+
   EmployeeModel({
     required this.id,
     required this.name,
@@ -28,5 +31,6 @@ class EmployeeModel {
     required this.gender,
     required this.email,
     required this.phone,
+    required this.image,
   });
 }

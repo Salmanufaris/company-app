@@ -31,50 +31,50 @@ class Averagescreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      list(id: "B00001"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00002"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00003"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00004"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00005"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00006"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00007"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00008"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B00009"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B000010"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "B000011"),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // list(id: "B00001"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00002"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00003"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00004"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00005"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00006"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00007"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00008"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B00009"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B000010"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "B000011"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                     ],
                   ),
                 ),
@@ -84,19 +84,18 @@ class Averagescreen extends StatelessWidget {
     );
   }
 
-  Container list({required String id}) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(5),
-      height: 60,
-      width: 350,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
-        color: Colors.teal[100],
-      ),
-      child: Text(
-        id,
-      ),
-    );
-  }
+  // Container list({required String id}) {
+  //   return Container(
+  //     alignment: Alignment.centerLeft,
+  //     padding: EdgeInsets.all(5),
+  //     height: 60,
+  //     width: 350,
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(7),
+  //       color: Colors.teal[100],
+  //     ),
+  //     child: Text(
+  //       id,
+  //     ),
+  //   );
 }

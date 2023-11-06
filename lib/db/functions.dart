@@ -4,16 +4,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 ValueNotifier<List<EmployeeModel>> employeeListNotifier = ValueNotifier([]);
 Future<void> addEmployee(EmployeeModel value) async {
-  final studentdb = await Hive.openBox<EmployeeModel>('employeedb');
-  await studentdb.add(value);
+  final employeedb = await Hive.openBox<EmployeeModel>('employeedb');
+  await employeedb.add(value);
   getAllEmployee();
 }
 
 Future<void> getAllEmployee() async {
-  final studentdb = await Hive.openBox<EmployeeModel>('employeedb');
+  final employeedb = await Hive.openBox<EmployeeModel>('employeedb');
   employeeListNotifier.value.clear();
 
-  employeeListNotifier.value.addAll(studentdb.values);
+  employeeListNotifier.value.addAll(employeedb.values);
   employeeListNotifier.notifyListeners();
 }
 

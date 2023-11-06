@@ -31,50 +31,50 @@ class Lowscreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      list(id: "C00001"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00002"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00003"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00004"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00005"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00006"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00007"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00008"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C00009"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C000010"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      list(id: "C000011"),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // list(id: "C00001"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00002"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00003"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00004"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00005"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00006"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00007"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00008"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C00009"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C000010"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // list(id: "C000011"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                     ],
                   ),
                 ),
@@ -84,19 +84,18 @@ class Lowscreen extends StatelessWidget {
     );
   }
 
-  Container list({required String id}) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(5),
-      height: 60,
-      width: 350,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
-        color: Colors.teal[100],
-      ),
-      child: Text(
-        id,
-      ),
-    );
-  }
+  // Container list({required String id}) {
+  //   return Container(
+  //     alignment: Alignment.centerLeft,
+  //     padding: EdgeInsets.all(5),
+  //     height: 60,
+  //     width: 350,
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(7),
+  //       color: Colors.teal[100],
+  //     ),
+  //     child: Text(
+  //       id,
+  //     ),
+  //   );
 }

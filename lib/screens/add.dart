@@ -35,7 +35,8 @@ class _AddScreenState extends State<AddScreen> {
     'others',
   ];
   String selectedvalue = "";
-  XFile? pickedImage;
+  XFile? pickedimage;
+  // late File pickedimage;
 
   Future<void> _pickImage() async {
     showDialog(
@@ -53,7 +54,7 @@ class _AddScreenState extends State<AddScreen> {
                   XFile? picked =
                       await Imagebringing.pickImage(ImageSource.camera);
                   setState(() {
-                    pickedImage = picked;
+                    pickedimage = picked;
                   });
                 },
                 child: const Text('Camera'),
@@ -64,7 +65,7 @@ class _AddScreenState extends State<AddScreen> {
                   XFile? picked =
                       await Imagebringing.pickImage(ImageSource.gallery);
                   setState(() {
-                    pickedImage = picked;
+                    pickedimage = picked;
                   });
                 },
                 child: const Text('Gallery'),
@@ -99,11 +100,11 @@ class _AddScreenState extends State<AddScreen> {
                     },
                     child: CircleAvatar(
                       radius: 80,
-                      backgroundImage: pickedImage != null
-                          ? FileImage(File(pickedImage!.path))
+                      backgroundImage: pickedimage != null
+                          ? FileImage(File(pickedimage!.path))
                           : null,
                       backgroundColor: Colors.grey[200],
-                      child: pickedImage == null
+                      child: pickedimage == null
                           ? Icon(
                               Icons.camera_alt,
                               size: 80,
@@ -151,6 +152,9 @@ class _AddScreenState extends State<AddScreen> {
                 ),
                 DropdownButton(
                   // Initial Value
+                  underline: Container(
+                    color: Colors.teal,
+                  ),
                   value: dropdownvalue,
                   dropdownColor: Colors.teal[300],
                   borderRadius: BorderRadius.circular(40),
@@ -234,6 +238,7 @@ class _AddScreenState extends State<AddScreen> {
     final _gender = _genderController.text.trim();
     final _email = _emailController.text.trim();
     final _phone = _phoneController.text.trim();
+
     if (_id.isEmpty ||
         _name.isEmpty ||
         _gender.isEmpty ||
@@ -241,14 +246,6 @@ class _AddScreenState extends State<AddScreen> {
         _phone.isEmpty) {
       return;
     } else {
-      final employee = (
-        id: _id,
-        number: _name,
-        adress: _adress,
-        gender: _gender,
-        email: _email,
-        phone: _phone
-      );
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => BottomBar1()),
       );
@@ -261,6 +258,7 @@ class _AddScreenState extends State<AddScreen> {
       gender: _gender,
       email: _email,
       phone: _phone,
+      image: pickedimage?.path ?? '',
     );
 
     addEmployee(_employee);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/screens/add.dart';
@@ -132,6 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   data.id,
                                   style: TextStyle(color: Colors.black),
                                 ),
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: FileImage(File(data.image)),
+                                ),
                                 subtitle: Text(
                                   data.name,
                                   style: TextStyle(color: Colors.black),
@@ -147,11 +153,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       EditScreen(
                                                           id: data.id,
                                                           name: data.name,
-                                                          adress: data.adress,
+                                                          address: data.adress,
                                                           gender: data.gender,
                                                           email: data.email,
                                                           phone: data.phone,
-                                                          index: index)));
+                                                          index: index,
+                                                          image: data.image)));
                                         },
                                         child: Icon(
                                           Icons.edit,

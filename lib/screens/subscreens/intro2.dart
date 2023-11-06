@@ -57,16 +57,17 @@ class IntroScreen2 extends StatelessWidget {
                           SizedBox(),
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => BottomBar1(
-                                        // employee: EmployeeModel(
-                                        //     id: '',
-                                        //     name: '',
-                                        //     gender: "",
-                                        //     adress: "",
-                                        //     email: "",
-                                        //     phone: "")
-                                        )));
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => BottomBar1(
+                                            // employee: EmployeeModel(
+                                            //     id: '',
+                                            //     name: '',
+                                            //     gender: "",
+                                            //     adress: "",
+                                            //     email: "",
+                                            //     phone: "")
+                                            )));
                               },
                               child: Text(
                                 "Next Page",
