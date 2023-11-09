@@ -1,36 +1,32 @@
 import 'package:hive_flutter/hive_flutter.dart';
 part 'data_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class EmployeeModel {
   @HiveField(0)
-  final String id;
-
-  @HiveField(1)
   final String name;
 
-  @HiveField(2)
-  final String adress;
-
-  @HiveField(3)
+  @HiveField(1)
   final String gender;
 
-  @HiveField(4)
+  @HiveField(2)
   final String email;
 
-  @HiveField(5)
-  final String phone;
+  @HiveField(3)
+  final String number;
 
-  @HiveField(6)
+  @HiveField(4)
+  final String category;
+
+  @HiveField(5)
   final String image;
 
   EmployeeModel({
-    required this.id,
     required this.name,
-    required this.adress,
     required this.gender,
     required this.email,
-    required this.phone,
+    required this.number,
+    required this.category,
     required this.image,
   });
 }

@@ -1,11 +1,8 @@
-import 'package:app/Model/data_model.dart';
 import 'package:app/widget/bottombar.dart';
-import 'package:app/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class IntroScreen2 extends StatelessWidget {
   const IntroScreen2({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,17 +54,9 @@ class IntroScreen2 extends StatelessWidget {
                           SizedBox(),
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                        builder: (context) => BottomBar1(
-                                            // employee: EmployeeModel(
-                                            //     id: '',
-                                            //     name: '',
-                                            //     gender: "",
-                                            //     adress: "",
-                                            //     email: "",
-                                            //     phone: "")
-                                            )));
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => BottomBar1()));
                               },
                               child: Text(
                                 "Next Page",

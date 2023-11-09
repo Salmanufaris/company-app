@@ -1,32 +1,22 @@
 import 'dart:io';
-
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/screens/add.dart';
-import 'package:app/screens/edit.dart';
-import 'package:app/screens/settings.dart';
 
+import 'package:app/screens/edit.dart';
+
+import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   EmployeeModel employee;
-
   HomeScreen({Key? key, required this.employee}) : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   List employeeList = [];
-
-  String dropdownvalue = "Best";
-
-  var items = [
-    "Best",
-    "Average",
-    "Low",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,15 +75,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton(
+                          ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => AddScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddScreen()));
                               },
-                              child: Text(
-                                "Add",
-                                style: TextStyle(color: Colors.black),
-                              )),
+                              child: Text("Add")),
                           TextButton(
                               onPressed: () {},
                               child: Text(
@@ -131,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.teal[200],
                               child: ListTile(
                                 title: Text(
-                                  data.id,
+                                  data.email,
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 leading: CircleAvatar(
@@ -151,14 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       EditScreen(
-                                                          id: data.id,
-                                                          name: data.name,
-                                                          address: data.adress,
-                                                          gender: data.gender,
-                                                          email: data.email,
-                                                          phone: data.phone,
-                                                          index: index,
-                                                          image: data.image)));
+                                                        category: data.category,
+                                                        email: data.email,
+                                                        gender: data.gender,
+                                                        image: data.image,
+                                                        index: index,
+                                                        name: data.name,
+                                                        number: data.number,
+                                                      )));
                                         },
                                         child: Icon(
                                           Icons.edit,
@@ -166,46 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     GestureDetector(
                                         onTap: () {
-                                          deleteEmployee(index);
+                                          deleteemployee(index);
                                         },
                                         child: Icon(
                                           Icons.delete,
                                           color: Colors.red,
                                         )),
-                                    DropdownButton(
-                                      // Initial Value
-                                      borderRadius: BorderRadius.circular(20),
-                                      value: dropdownvalue,
-                                      underline: Container(
-                                        color: Colors.teal[300],
-                                      ),
-                                      // Down Arrow Icon
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                      ),
-                                      dropdownColor: Colors.teal[300],
-
-                                      style: TextStyle(fontSize: 7),
-                                      // Array list of items
-                                      items: items.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(
-                                            items,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      // After selecting the desired option,it will
-                                      // change button value to selected value
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue = newValue!;
-                                        });
-                                      },
-                                    ),
                                   ],
                                 ),
                               ),

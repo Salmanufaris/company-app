@@ -8,7 +8,7 @@ part of 'data_model.dart';
 
 class EmployeeModelAdapter extends TypeAdapter<EmployeeModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   EmployeeModel read(BinaryReader reader) {
@@ -17,33 +17,30 @@ class EmployeeModelAdapter extends TypeAdapter<EmployeeModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return EmployeeModel(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      adress: fields[2] as String,
-      gender: fields[3] as String,
-      email: fields[4] as String,
-      phone: fields[5] as String,
-      image: fields[6] as String,
+      name: fields[0] as String,
+      gender: fields[1] as String,
+      email: fields[2] as String,
+      number: fields[3] as String,
+      category: fields[4] as String,
+      image: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, EmployeeModel obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.name)
-      ..writeByte(2)
-      ..write(obj.adress)
-      ..writeByte(3)
-      ..write(obj.gender)
-      ..writeByte(4)
-      ..write(obj.email)
-      ..writeByte(5)
-      ..write(obj.phone)
       ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.gender)
+      ..writeByte(2)
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.number)
+      ..writeByte(4)
+      ..write(obj.category)
+      ..writeByte(5)
       ..write(obj.image);
   }
 

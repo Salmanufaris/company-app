@@ -5,7 +5,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Screen1 extends StatefulWidget {
   const Screen1({super.key});
-
   @override
   State<Screen1> createState() => _Screen1State();
 }

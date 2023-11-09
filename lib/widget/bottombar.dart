@@ -1,5 +1,5 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/db/functions.dart';
+
 import 'package:app/screens/average.dart';
 import 'package:app/screens/best.dart';
 import 'package:app/screens/chart.dart';
@@ -23,15 +23,14 @@ class _BottomBarState extends State<BottomBar1> {
   final screens = [
     HomeScreen(
         employee: EmployeeModel(
-            id: '',
             name: '',
-            adress: '',
             gender: '',
             email: '',
-            phone: '',
+            number: '',
+            category: "",
             image: "")),
     Bestscreen(),
-    Averagescreen(),
+    Avergescreen(),
     Lowscreen(),
     Chartscreen(),
   ];

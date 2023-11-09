@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/widget/bottombar.dart';
@@ -7,49 +6,42 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditScreen extends StatefulWidget {
-  final String id;
   final String name;
-  final String address;
+
   final String gender;
   final String email;
-  final String phone;
+  final String number;
+  final String category;
   final String image;
   final int index;
-
   EditScreen({
     Key? key,
-    required this.id,
     required this.name,
-    required this.address,
     required this.gender,
     required this.email,
-    required this.phone,
+    required this.number,
+    required this.category,
     required this.image,
     required this.index,
   }) : super(key: key);
-
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
-  TextEditingController _idController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
   TextEditingController _genderController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _numberController = TextEditingController();
+  TextEditingController _categoryController = TextEditingController();
   String? pickedImage;
-
   @override
   void initState() {
-    _idController.text = widget.id;
     _nameController.text = widget.name;
-    _addressController.text = widget.address;
+    _categoryController.text = widget.category;
     _genderController.text = widget.gender;
     _emailController.text = widget.email;
-    _phoneController.text = widget.phone;
-
+    _numberController.text = widget.number;
     pickedImage = widget.image;
     super.initState();
   }
@@ -63,41 +55,87 @@ class _EditScreenState extends State<EditScreen> {
     }
   }
 
-  String dropdownvalue = 'Male';
+  String categoryDropdownValue = 'Best';
+  var categoryItems = [
+    'Best',
+    'Average',
+    'Low',
+  ];
 
+  String dropdownvalue = 'Male';
   var items = [
     'Male',
     'Female',
     'others',
   ];
   String selectedvalue = "";
+  XFile? pickedimage;
+  final _formkey = GlobalKey<FormState>();
+
+  Future<void> _pickimage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // backgroundColor: Colors.teal[300],
+          backgroundColor: Colors.white,
+          title: const Text('Whic one you want '),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await Imagebringing.pickImage(ImageSource.camera);
+                  setState(() {
+                    pickedimage = picked;
+                  });
+                },
+                child: const Text('Camera'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  XFile? picked =
+                      await Imagebringing.pickImage(ImageSource.gallery);
+                  setState(() {
+                    pickedimage = picked;
+                  });
+                },
+                child: const Text('Gallery'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.teal[300],
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 160,
-                  width: 170,
-                  color: Colors.teal[300],
-                  child: GestureDetector(
-                    onTap: _pickImage,
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+            child: Form(
+                key: _formkey,
+                child: Column(children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _pickimage();
+                    },
                     child: CircleAvatar(
                       radius: 80,
-                      backgroundImage: pickedImage != null
-                          ? FileImage(File(pickedImage!))
+                      backgroundImage: pickedimage != null
+                          ? FileImage(File(pickedimage!.path))
                           : null,
                       backgroundColor: Colors.grey[200],
-                      child: pickedImage == null
+                      child: pickedimage == null
                           ? Icon(
                               Icons.camera_alt,
                               size: 80,
@@ -106,156 +144,159 @@ class _EditScreenState extends State<EditScreen> {
                           : null,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _idController,
-                    decoration: InputDecoration(
-                      hintText: 'Id',
-                      fillColor: const Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, bottom: 5, top: 10),
+                    child: TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                          hintText: "Name",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      fillColor: const Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: TextFormField(
+                      controller: _genderController,
+                      decoration: InputDecoration(
+                          prefix: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              iconEnabledColor: Colors.black,
+                              underline: Container(
+                                color: Colors.white,
+                              ),
+                              value: dropdownvalue,
+                              dropdownColor: Colors.teal[300],
+                              borderRadius: BorderRadius.circular(40),
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: items.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownvalue = newValue!;
+                                  _genderController.text = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                          hintText: "click here to select gender",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _addressController,
-                    decoration: InputDecoration(
-                      hintText: 'Adress',
-                      fillColor: const Color.fromARGB(255, 231, 230, 230),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, bottom: 5, top: 10),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          hintText: "Email",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
-                ),
-                DropdownButton(
-                  underline: Container(
-                    color: Colors.teal,
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: TextFormField(
+                      controller: _numberController,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.phone),
+                          hintText: "Number",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
-                  value: dropdownvalue,
-                  dropdownColor: Colors.teal[300],
-                  borderRadius: BorderRadius.circular(40),
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                      _genderController.text = newValue;
-                    });
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _genderController,
-                    decoration: InputDecoration(
-                        hintText: selectedvalue,
-                        labelText: "Gender",
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Select Category",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      DropdownButton(
+                        iconEnabledColor: Colors.red,
+                        underline: Container(
+                          color: Colors.white,
+                        ),
+                        value: categoryDropdownValue,
+                        dropdownColor: Colors.teal[300],
+                        borderRadius: BorderRadius.circular(40),
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: categoryItems.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(
+                              items,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            categoryDropdownValue = newValue!;
+                            _categoryController.text = newValue!;
+                            // You can perform any other actions here when the value changes
+                          });
+                        },
+                      )
+                    ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: selectedvalue,
-                        labelText: "Email",
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26, right: 140),
+                    child: TextFormField(
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                          hintText: categoryDropdownValue,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(
-                        hintText: selectedvalue,
-                        labelText: "Number",
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                  SizedBox(
+                    height: 26,
                   ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    _updateEmployee();
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text(
-                    'Update',
-                    style: TextStyle(color: Colors.amber),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+                  MaterialButton(
+                      color: Colors.green,
+                      onPressed: () {
+                        _updateEmployee();
+                      },
+                      child: Text("Add")),
+                ]))),
       ),
-    );
+    ));
   }
 
   void _updateEmployee() {
-    final editedId = _idController.text.trim();
-    final editedName = _nameController.text.trim();
-    final editedAddress = _addressController.text.trim();
+    final editedname = _nameController.text.trim();
+    final editedcategory = _categoryController.text.trim();
     final editedGender = _genderController.text.trim();
     final editedEmail = _emailController.text.trim();
-    final editedPhone = _phoneController.text.trim();
-
-    if (editedId.isEmpty ||
-        editedName.isEmpty ||
-        editedAddress.isEmpty ||
+    final editednumber = _numberController.text.trim();
+    if (editedname.isEmpty ||
         editedGender.isEmpty ||
         editedEmail.isEmpty ||
-        editedPhone.isEmpty ||
+        editednumber.isEmpty ||
+        editedcategory.isEmpty ||
         pickedImage == null) {
-      // Handle empty fields
       return;
     }
-
     final updatedEmployee = EmployeeModel(
-      id: editedId,
-      name: editedName,
-      adress: editedAddress,
+      name: editedname,
       gender: editedGender,
       email: editedEmail,
-      phone: editedPhone,
+      number: editednumber,
+      category: editedcategory,
       image: pickedImage!,
     );
-
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         'Updated Successfully',
@@ -264,8 +305,7 @@ class _EditScreenState extends State<EditScreen> {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.black,
     ));
-
-    editEmployee(widget.index, updatedEmployee);
+    editemployee(widget.index, updatedEmployee);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => BottomBar1()));
   }

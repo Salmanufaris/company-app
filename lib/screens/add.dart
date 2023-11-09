@@ -1,34 +1,31 @@
 import 'dart:io';
-
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddScreen extends StatefulWidget {
   AddScreen({Key? key}) : super(key: key);
-
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
 
 class _AddScreenState extends State<AddScreen> {
-  final _idController = TextEditingController();
-
   final _nameController = TextEditingController();
-
-  final _adressController = TextEditingController();
-
   final _genderController = TextEditingController();
-
   final _emailController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _categoryController = TextEditingController();
 
-  final _phoneController = TextEditingController();
+  String categoryDropdownValue = 'Best';
+  var categoryItems = [
+    'Best',
+    'Average',
+    'Low',
+  ];
+
   String dropdownvalue = 'Male';
-
-  // List of items in our dropdown menu
   var items = [
     'Male',
     'Female',
@@ -36,14 +33,14 @@ class _AddScreenState extends State<AddScreen> {
   ];
   String selectedvalue = "";
   XFile? pickedimage;
-  // late File pickedimage;
-
+  final _formkey = GlobalKey<FormState>();
   Future<void> _pickImage() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.teal[300],
+          // backgroundColor: Colors.teal[300],
+          backgroundColor: Colors.white,
           title: const Text('Whic one you want '),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -80,21 +77,17 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.teal[300],
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 160,
-                  width: 170,
-                  color: Colors.teal[300],
-                  child: GestureDetector(
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+            child: Form(
+                key: _formkey,
+                child: Column(children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
                     onTap: () {
                       _pickImage();
                     },
@@ -113,154 +106,163 @@ class _AddScreenState extends State<AddScreen> {
                           : null,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _idController,
-                    decoration: InputDecoration(
-                        hintText: 'Id',
-                        fillColor: const Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, bottom: 5, top: 10),
+                    child: TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                          hintText: "Name",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                        hintText: 'Full Name',
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: TextFormField(
+                      controller: _genderController,
+                      decoration: InputDecoration(
+                          prefix: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              iconEnabledColor: Colors.black,
+                              underline: Container(
+                                color: Colors.white,
+                              ),
+                              value: dropdownvalue,
+                              dropdownColor: Colors.teal[300],
+                              borderRadius: BorderRadius.circular(40),
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: items.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownvalue = newValue!;
+                                  _genderController.text = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                          hintText: "click here to select gender",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _adressController,
-                    decoration: InputDecoration(
-                        hintText: 'Adress',
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                  ),
-                ),
-                DropdownButton(
-                  // Initial Value
-                  underline: Container(
-                    color: Colors.teal,
-                  ),
-                  value: dropdownvalue,
-                  dropdownColor: Colors.teal[300],
-                  borderRadius: BorderRadius.circular(40),
-
-                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                  // Array list of items
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                      _genderController.text = newValue;
-                    });
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _genderController,
-                    decoration: InputDecoration(
-                        hintText: selectedvalue,
-                        labelText: "Gender",
-                        fillColor: Color.fromARGB(255, 231, 230, 230),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10, left: 30, right: 30),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, bottom: 5, top: 10),
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                          hintText: 'Email',
-                          fillColor: Color.fromARGB(255, 231, 230, 230),
-                          filled: true,
+                          prefixIcon: Icon(Icons.email),
+                          hintText: "Email",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
-                    )),
-                Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10, left: 30, right: 30),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                     child: TextFormField(
-                      controller: _phoneController,
+                      controller: _numberController,
                       decoration: InputDecoration(
-                          hintText: 'phone',
-                          fillColor: Color.fromARGB(255, 231, 230, 230),
-                          filled: true,
+                          prefixIcon: Icon(Icons.phone),
+                          hintText: "Number",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
-                    )),
-                ElevatedButton.icon(
-                    onPressed: () {
-                      onAddStudentButtonClicked(context);
-                    },
-                    icon: Icon(Icons.add),
-                    label: Text('Add', style: TextStyle(color: Colors.amber)))
-              ],
-            ),
-          ),
-        ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Select Category",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      DropdownButton(
+                        iconEnabledColor: Colors.red,
+                        underline: Container(
+                          color: Colors.white,
+                        ),
+                        value: categoryDropdownValue,
+                        dropdownColor: Colors.teal[300],
+                        borderRadius: BorderRadius.circular(40),
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: categoryItems.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(
+                              items,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            categoryDropdownValue = newValue!;
+                            _categoryController.text = newValue!;
+                            // You can perform any other actions here when the value changes
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26, right: 140),
+                    child: TextFormField(
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                          hintText: categoryDropdownValue,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 26,
+                  ),
+                  MaterialButton(
+                      color: Colors.green,
+                      onPressed: () {
+                        onAddStudentButtonClicked(context);
+                      },
+                      child: Text("Add")),
+                ]))),
       ),
-    );
+    ));
   }
 
   Future<void> onAddStudentButtonClicked(BuildContext context) async {
-    final _id = _idController.text.trim();
     final _name = _nameController.text.trim();
-    final _adress = _adressController.text.trim();
     final _gender = _genderController.text.trim();
     final _email = _emailController.text.trim();
-    final _phone = _phoneController.text.trim();
+    final _number = _numberController.text.trim();
+    final _category = _categoryController.text.trim();
 
-    if (_id.isEmpty ||
-        _name.isEmpty ||
+    if (_name.isEmpty ||
         _gender.isEmpty ||
         _email.isEmpty ||
-        _phone.isEmpty) {
+        _number.isEmpty ||
+        _category.isEmpty) {
       return;
     } else {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => BottomBar1()),
       );
     }
-
     final _employee = EmployeeModel(
-      id: _id,
       name: _name,
-      adress: _adress,
       gender: _gender,
       email: _email,
-      phone: _phone,
+      number: _number,
+      category: _category,
       image: pickedimage?.path ?? '',
     );
-
     addEmployee(_employee);
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,8 +17,6 @@ class SettingsScreen extends StatelessWidget {
         body: Column(
           children: [
             InkWell(
-              splashColor: Colors.amber,
-              hoverColor: Colors.grey,
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AboutScreen()));
@@ -29,8 +26,6 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             InkWell(
-              hoverColor: Colors.grey,
-              splashColor: Colors.amber,
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => Terms_Screen()));
@@ -41,15 +36,11 @@ class SettingsScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {},
-              hoverColor: Colors.grey,
-              splashColor: Colors.amber,
               child: ListTile(
                 title: Text("Reset"),
               ),
             ),
             InkWell(
-              hoverColor: Colors.grey,
-              splashColor: Colors.amber,
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => LoginScreen()));
