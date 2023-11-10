@@ -14,6 +14,7 @@ class EditScreen extends StatefulWidget {
   final String category;
   final String image;
   final int index;
+
   EditScreen({
     Key? key,
     required this.name,
@@ -43,6 +44,7 @@ class _EditScreenState extends State<EditScreen> {
     _emailController.text = widget.email;
     _numberController.text = widget.number;
     pickedImage = widget.image;
+
     super.initState();
   }
 

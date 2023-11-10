@@ -29,17 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
           leading: Icon(
             Icons.search,
           ),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SettingsScreen()));
-                },
-                child: Text(
-                  "Settings",
-                  style: TextStyle(color: Colors.black),
-                ))
-          ],
         ),
         backgroundColor: Colors.teal[500],
         body: Center(

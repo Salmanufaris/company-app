@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Bestscreen extends StatelessWidget {
-  const Bestscreen({super.key});
+class Tabscreen2 extends StatelessWidget {
+  const Tabscreen2({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Avergescreen extends StatelessWidget {
-  const Avergescreen({super.key});
+class Tabscreen1 extends StatelessWidget {
+  const Tabscreen1({super.key});
 
   @override
   Widget build(BuildContext context) {

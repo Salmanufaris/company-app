@@ -1,10 +1,10 @@
 import 'package:app/Model/data_model.dart';
 
-import 'package:app/screens/average.dart';
-import 'package:app/screens/best.dart';
+import 'package:app/screens/employees.dart';
 import 'package:app/screens/chart.dart';
 import 'package:app/screens/home.dart';
-import 'package:app/screens/low.dart';
+
+import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar1 extends StatefulWidget {
@@ -29,10 +29,9 @@ class _BottomBarState extends State<BottomBar1> {
             number: '',
             category: "",
             image: "")),
-    Bestscreen(),
-    Avergescreen(),
-    Lowscreen(),
+    Employeescreen(),
     Chartscreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -58,18 +57,15 @@ class _BottomBarState extends State<BottomBar1> {
               ),
               label: "Home"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.stars, color: Colors.black),
-            label: "Best",
+            icon: Icon(Icons.person, color: Colors.black),
+            label: "Employees",
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star_half, color: Colors.black),
-              label: "Average"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star_outline, color: Colors.black),
-              label: "Low"),
           BottomNavigationBarItem(
               icon: Icon(Icons.chat_rounded, color: Colors.black),
               label: "Chart"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings, color: Colors.black),
+              label: "Settings"),
         ],
       ),
     );
