@@ -3,11 +3,11 @@ import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditScreen extends StatefulWidget {
   final String name;
-
   final String gender;
   final String email;
   final String number;
@@ -25,6 +25,7 @@ class EditScreen extends StatefulWidget {
     required this.image,
     required this.index,
   }) : super(key: key);
+
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
@@ -36,6 +37,7 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController _numberController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   String? pickedImage;
+
   @override
   void initState() {
     _nameController.text = widget.name;
@@ -44,7 +46,6 @@ class _EditScreenState extends State<EditScreen> {
     _emailController.text = widget.email;
     _numberController.text = widget.number;
     pickedImage = widget.image;
-
     super.initState();
   }
 
@@ -79,7 +80,6 @@ class _EditScreenState extends State<EditScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // backgroundColor: Colors.teal[300],
           backgroundColor: Colors.white,
           title: const Text('Whic one you want '),
           content: Row(
@@ -117,164 +117,195 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Center(
-            child: Form(
-                key: _formkey,
-                child: Column(children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _pickimage();
-                    },
-                    child: CircleAvatar(
-                      radius: 80,
-                      backgroundImage: pickedimage != null
-                          ? FileImage(File(pickedimage!.path))
-                          : null,
-                      backgroundColor: Colors.grey[200],
-                      child: pickedimage == null
-                          ? Icon(
-                              Icons.camera_alt,
-                              size: 80,
-                              color: Colors.grey[800],
-                            )
-                          : null,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Center(
+              child: Form(
+                  key: _formkey,
+                  child: Column(children: [
+                    SizedBox(
+                      height: 30,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, bottom: 5, top: 10),
-                    child: TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                          hintText: "Name",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 10,
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: TextFormField(
-                      controller: _genderController,
-                      decoration: InputDecoration(
-                          prefix: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              iconEnabledColor: Colors.black,
-                              underline: Container(
-                                color: Colors.white,
-                              ),
-                              value: dropdownvalue,
-                              dropdownColor: Colors.teal[300],
-                              borderRadius: BorderRadius.circular(40),
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: items.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownvalue = newValue!;
-                                  _genderController.text = newValue;
-                                });
-                              },
-                            ),
-                          ),
-                          hintText: "click here to select gender",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, bottom: 5, top: 10),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          hintText: "Email",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: TextFormField(
-                      controller: _numberController,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          hintText: "Number",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "Select Category",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      DropdownButton(
-                        iconEnabledColor: Colors.red,
-                        underline: Container(
-                          color: Colors.white,
-                        ),
-                        value: categoryDropdownValue,
-                        dropdownColor: Colors.teal[300],
-                        borderRadius: BorderRadius.circular(40),
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        items: categoryItems.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(
-                              items,
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            categoryDropdownValue = newValue!;
-                            _categoryController.text = newValue!;
-                            // You can perform any other actions here when the value changes
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 26, right: 140),
-                    child: TextFormField(
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          hintText: categoryDropdownValue,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 26,
-                  ),
-                  MaterialButton(
-                      color: Colors.green,
-                      onPressed: () {
-                        _updateEmployee();
+                    GestureDetector(
+                      onTap: () {
+                        _pickimage();
                       },
-                      child: Text("Add")),
-                ]))),
+                      child: CircleAvatar(
+                        radius: 80,
+                        backgroundImage: pickedimage != null
+                            ? FileImage(File(pickedimage!.path))
+                            : FileImage(File(widget.image)),
+                        backgroundColor: Colors.grey[200],
+                        child: pickedimage == null
+                            ? Icon(
+                                Icons.camera_alt,
+                                size: 80,
+                                color: Colors.grey[800],
+                              )
+                            : null,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 4),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "field is empty";
+                          }
+                        },
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                            hintText: "Name",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 4,
+                        left: 20,
+                        right: 20,
+                      ),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "field is empty";
+                          }
+                        },
+                        controller: _genderController,
+                        decoration: InputDecoration(
+                            prefix: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                iconEnabledColor: Colors.black,
+                                underline: Container(
+                                  color: Colors.white,
+                                ),
+                                value: dropdownvalue,
+                                dropdownColor: Colors.teal[300],
+                                borderRadius: BorderRadius.circular(40),
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue = newValue!;
+                                    _genderController.text = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                            hintText: "click here to select gender",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20, bottom: 5, top: 5),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "field is empty";
+                          } else if (!value.isValidEmail()) {
+                            return "Invalid email format";
+                          }
+                        },
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            hintText: "Email",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                      ),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "field is empty";
+                          }
+                        },
+                        controller: _numberController,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone),
+                            hintText: "+91",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        maxLength: 10,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(
+                              r'[0-9]')), // Allow only numeric characters
+                        ],
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Select Category",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        DropdownButton(
+                          iconEnabledColor: Colors.red,
+                          underline: Container(
+                            color: Colors.white,
+                          ),
+                          value: categoryDropdownValue,
+                          dropdownColor: Colors.teal[300],
+                          borderRadius: BorderRadius.circular(40),
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: categoryItems.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(
+                                items,
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              categoryDropdownValue = newValue!;
+                              _categoryController.text = newValue!;
+                              // You can perform any other actions here when the value changes
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26, right: 140),
+                      child: TextFormField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                            hintText: categoryDropdownValue,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 26,
+                    ),
+                    MaterialButton(
+                        color: Colors.green,
+                        onPressed: () {
+                          _updateEmployee();
+                        },
+                        child: Text("Add")),
+                  ]))),
+        ),
       ),
-    ));
+    );
   }
 
   void _updateEmployee() {
@@ -308,6 +339,7 @@ class _EditScreenState extends State<EditScreen> {
       backgroundColor: Colors.black,
     ));
     editemployee(widget.index, updatedEmployee);
+
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => BottomBar1()));
   }
@@ -318,5 +350,13 @@ class Imagebringing {
     final ImagePicker imagePicker = ImagePicker();
     final picked = await imagePicker.pickImage(source: source);
     return picked;
+  }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
   }
 }

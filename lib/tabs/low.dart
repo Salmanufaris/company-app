@@ -1,12 +1,18 @@
 import 'dart:io';
+
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/screens/edit.dart';
 import 'package:flutter/material.dart';
 
-class Allscreen extends StatelessWidget {
-  const Allscreen({super.key});
+class Lowscreen extends StatefulWidget {
+  const Lowscreen({super.key});
 
+  @override
+  State<Lowscreen> createState() => _LowscreenState();
+}
+
+class _LowscreenState extends State<Lowscreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,9 +22,12 @@ class Allscreen extends StatelessWidget {
             valueListenable: employeeListNotifier,
             builder: (BuildContext ctx, List<EmployeeModel> employeeList,
                 Widget? child) {
+              final filteredEmployeList = employeeList
+                  .where((Employe) => Employe.category?.contains('Low') == true)
+                  .toList();
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  final data = employeeList[index];
+                  final data = filteredEmployeList[index];
                   return Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
@@ -69,7 +78,7 @@ class Allscreen extends StatelessWidget {
                     ),
                   );
                 },
-                itemCount: employeeList.length,
+                itemCount: filteredEmployeList.length,
               );
             },
           );

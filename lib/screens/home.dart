@@ -5,7 +5,6 @@ import 'package:app/screens/add.dart';
 
 import 'package:app/screens/edit.dart';
 
-import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,18 +43,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 2,
+                      height: 70,
                     ),
-                    CircleAvatar(
-                      radius: 80,
-                      backgroundColor: Colors.teal[100],
+                    Container(
+                      height: 35,
+                      width: 230,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.teal,
+                      ),
                     ),
                     SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      "Company name",
-                      style: TextStyle(color: Colors.black),
+                      height: 60,
                     ),
                     Container(
                       height: 30,
@@ -64,14 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
+                          TextButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AddScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((context) => AddScreen())));
                               },
-                              child: Text("Add")),
+                              child: Text(
+                                "Add",
+                                style: TextStyle(color: Colors.black),
+                              )),
                           TextButton(
                               onPressed: () {},
                               child: Text(
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.teal[200],
                               child: ListTile(
                                 title: Text(
-                                  data.email,
+                                  data.name,
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 leading: CircleAvatar(
@@ -117,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   backgroundImage: FileImage(File(data.image)),
                                 ),
                                 subtitle: Text(
-                                  data.name,
-                                  style: TextStyle(color: Colors.black),
+                                  data.category,
+                                  style: TextStyle(color: Colors.red),
                                 ),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,

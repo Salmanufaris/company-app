@@ -3,6 +3,7 @@ import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddScreen extends StatefulWidget {
@@ -34,12 +35,13 @@ class _AddScreenState extends State<AddScreen> {
   String selectedvalue = "";
   XFile? pickedimage;
   final _formkey = GlobalKey<FormState>();
+  String email = 'test@example.com';
+
   Future<void> _pickImage() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // backgroundColor: Colors.teal[300],
           backgroundColor: Colors.white,
           title: const Text('Whic one you want '),
           content: Row(
@@ -107,9 +109,13 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, bottom: 5, top: 10),
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 4),
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "field is empty";
+                        }
+                      },
                       controller: _nameController,
                       decoration: InputDecoration(
                           hintText: "Name",
@@ -119,11 +125,16 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 10,
+                      top: 4,
                       left: 20,
                       right: 20,
                     ),
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "field is empty";
+                        }
+                      },
                       controller: _genderController,
                       decoration: InputDecoration(
                           prefix: DropdownButtonHideUnderline(
@@ -156,9 +167,16 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, bottom: 5, top: 10),
+                    padding:
+                        EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 5),
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "field is empty";
+                        } else if (!value.isValidEmail()) {
+                          return "Invalid email format";
+                        }
+                      },
                       controller: _emailController,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.email),
@@ -168,14 +186,28 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                    padding: EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                    ),
                     child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "field is empty";
+                        }
+                      },
                       controller: _numberController,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.phone),
-                          hintText: "Number",
+                          hintText: "+91",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
+                      maxLength: 10,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[0-9]')), // Allow only numeric characters
+                      ],
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                   Row(
@@ -229,7 +261,9 @@ class _AddScreenState extends State<AddScreen> {
                   MaterialButton(
                       color: Colors.green,
                       onPressed: () {
-                        onAddStudentButtonClicked(context);
+                        if (_formkey.currentState!.validate()) {
+                          onAddStudentButtonClicked(context);
+                        }
                       },
                       child: Text("Add")),
                 ]))),
@@ -272,5 +306,13 @@ class Imagebringing {
     final ImagePicker imagePicker = ImagePicker();
     final picked = await imagePicker.pickImage(source: source);
     return picked;
+  }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
   }
 }

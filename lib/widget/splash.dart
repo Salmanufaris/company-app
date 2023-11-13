@@ -17,16 +17,8 @@ class _MyWidgetState extends State<SplashScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[500],
-      body: Center(
-        child: Text(
-          " YOUR WELCOME",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      backgroundColor: Colors.black,
+      body: Center(),
     );
   }
 

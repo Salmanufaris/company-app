@@ -1,7 +1,7 @@
 import 'package:app/tabs/all.dart';
-import 'package:app/tabs/tab1.dart';
-import 'package:app/tabs/tab2.dart';
-import 'package:app/tabs/tab3.dart';
+import 'package:app/tabs/best.dart';
+import 'package:app/tabs/avrg.dart';
+import 'package:app/tabs/low.dart';
 import 'package:flutter/material.dart';
 
 class Employeescreen extends StatelessWidget {
@@ -14,27 +14,32 @@ class Employeescreen extends StatelessWidget {
         child: SafeArea(
             child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.teal[400],
-            bottom: TabBar(tabs: [
-              Tab(
-                text: "All",
-              ),
-              Tab(
-                text: "Best",
-              ),
-              Tab(
-                text: "Average",
-              ),
-              Tab(
-                text: "Low",
-              ),
-            ]),
+            bottom: TabBar(
+                labelColor: Colors.black,
+                indicatorColor: Colors.brown,
+                indicatorWeight: 3,
+                tabs: [
+                  Tab(
+                    text: "All",
+                  ),
+                  Tab(
+                    text: "Best",
+                  ),
+                  Tab(
+                    text: "Average",
+                  ),
+                  Tab(
+                    text: "Low",
+                  ),
+                ]),
           ),
           body: TabBarView(children: [
             Allscreen(),
-            Tabscreen1(),
-            Tabscreen2(),
-            Tabscreen3(),
+            Bestscreen(),
+            Averagescreen(),
+            Lowscreen(),
           ]),
         )));
   }
