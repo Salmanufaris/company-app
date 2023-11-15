@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddScreen extends StatefulWidget {
-  AddScreen({Key? key}) : super(key: key);
+  final String companyname;
+  AddScreen({Key? key, required this.companyname}) : super(key: key);
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
@@ -80,15 +81,25 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => BottomBar1(
+                      companyname: widget.companyname, updatedImage: "")));
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            )),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Center(
             child: Form(
                 key: _formkey,
                 child: Column(children: [
-                  SizedBox(
-                    height: 30,
-                  ),
                   GestureDetector(
                     onTap: () {
                       _pickImage();
@@ -121,6 +132,11 @@ class _AddScreenState extends State<AddScreen> {
                           hintText: "Name",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-z]')), // Allow only numeric characters
+                      ],
+                      keyboardType: TextInputType.text,
                     ),
                   ),
                   Padding(
@@ -286,7 +302,11 @@ class _AddScreenState extends State<AddScreen> {
       return;
     } else {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => BottomBar1()),
+        MaterialPageRoute(
+            builder: (context) => BottomBar1(
+                  updatedImage: "",
+                  companyname: widget.companyname,
+                )),
       );
     }
     final _employee = EmployeeModel(

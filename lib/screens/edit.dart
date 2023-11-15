@@ -1,18 +1,13 @@
 import 'dart:io';
-import 'package:app/Model/data_model.dart';
-import 'package:app/db/functions.dart';
-import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:app/Model/data_model.dart';
+import 'package:app/db/functions.dart';
+import 'package:app/widget/bottombar.dart';
 
 class EditScreen extends StatefulWidget {
-  final String name;
-  final String gender;
-  final String email;
-  final String number;
-  final String category;
-  final String image;
+  final String name, gender, email, number, category, image, companyname;
   final int index;
 
   EditScreen({
@@ -24,6 +19,7 @@ class EditScreen extends StatefulWidget {
     required this.category,
     required this.image,
     required this.index,
+    required this.companyname,
   }) : super(key: key);
 
   @override
@@ -37,6 +33,7 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController _numberController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   String? pickedImage;
+  bool imageUpdated = false;
 
   @override
   void initState() {
@@ -54,34 +51,18 @@ class _EditScreenState extends State<EditScreen> {
     if (picked != null) {
       setState(() {
         pickedImage = picked.path;
+        imageUpdated = true;
       });
     }
   }
 
-  String categoryDropdownValue = 'Best';
-  var categoryItems = [
-    'Best',
-    'Average',
-    'Low',
-  ];
-
-  String dropdownvalue = 'Male';
-  var items = [
-    'Male',
-    'Female',
-    'others',
-  ];
-  String selectedvalue = "";
-  XFile? pickedimage;
-  final _formkey = GlobalKey<FormState>();
-
-  Future<void> _pickimage() async {
+  Future<void> _pickImageDialog() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('Whic one you want '),
+          title: const Text('Which one do you want?'),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -90,9 +71,7 @@ class _EditScreenState extends State<EditScreen> {
                   Navigator.pop(context);
                   XFile? picked =
                       await Imagebringing.pickImage(ImageSource.camera);
-                  setState(() {
-                    pickedimage = picked;
-                  });
+                  _updateImage(picked);
                 },
                 child: const Text('Camera'),
               ),
@@ -101,9 +80,7 @@ class _EditScreenState extends State<EditScreen> {
                   Navigator.pop(context);
                   XFile? picked =
                       await Imagebringing.pickImage(ImageSource.gallery);
-                  setState(() {
-                    pickedimage = picked;
-                  });
+                  _updateImage(picked);
                 },
                 child: const Text('Gallery'),
               ),
@@ -114,234 +91,269 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
+  void _updateImage(XFile? picked) {
+    if (picked != null) {
+      setState(() {
+        pickedImage = picked.path;
+        imageUpdated = true;
+      });
+    }
+  }
+
+  String categoryDropdownValue = 'Best';
+  var categoryItems = ['Best', 'Average', 'Low'];
+
+  String dropdownvalue = 'Male';
+  var items = ['Male', 'Female', 'others'];
+
+  final _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => BottomBar1(
+                    companyname: widget.companyname,
+                    updatedImage: "",
+                  ),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Center(
-              child: Form(
-                  key: _formkey,
-                  child: Column(children: [
-                    SizedBox(
-                      height: 30,
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: _pickImageDialog,
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundImage: pickedImage != null
+                          ? FileImage(File(pickedImage!))
+                          : FileImage(File(widget.image)),
+                      backgroundColor: Colors.grey[200],
+                      child: pickedImage == null
+                          ? Icon(
+                              Icons.camera_alt,
+                              size: 80,
+                              color: Colors.grey[800],
+                            )
+                          : null,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _pickimage();
-                      },
-                      child: CircleAvatar(
-                        radius: 80,
-                        backgroundImage: pickedimage != null
-                            ? FileImage(File(pickedimage!.path))
-                            : FileImage(File(widget.image)),
-                        backgroundColor: Colors.grey[200],
-                        child: pickedimage == null
-                            ? Icon(
-                                Icons.camera_alt,
-                                size: 80,
-                                color: Colors.grey[800],
-                              )
-                            : null,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 4),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "field is empty";
-                          }
+                  ),
+                  _buildTextFormField(
+                    controller: _nameController,
+                    hintText: "Name",
+                    validator: (value) => value == null || value.isEmpty
+                        ? "Field is empty"
+                        : null,
+                  ),
+                  _buildTextFormField(
+                    controller: _genderController,
+                    hintText: "Click here to select gender",
+                    prefix: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        iconEnabledColor: Colors.black,
+                        underline: Container(color: Colors.white),
+                        value: dropdownvalue,
+                        dropdownColor: Colors.teal[300],
+                        borderRadius: BorderRadius.circular(40),
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: items.map((String item) {
+                          return DropdownMenuItem(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                            _genderController.text = newValue;
+                          });
                         },
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                            hintText: "Name",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 4,
-                        left: 20,
-                        right: 20,
+                    validator: (value) => value == null || value.isEmpty
+                        ? "Field is empty"
+                        : null,
+                  ),
+                  _buildTextFormField(
+                    controller: _emailController,
+                    hintText: "Email",
+                    prefixIcon: Icon(Icons.email),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Field is empty";
+                      } else if (!value.isValidEmail()) {
+                        return "Invalid email format";
+                      }
+                      return null;
+                    },
+                  ),
+                  _buildTextFormField(
+                    controller: _numberController,
+                    hintText: "+91",
+                    prefixIcon: Icon(Icons.phone),
+                    maxLength: 10,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    ],
+                    keyboardType: TextInputType.number,
+                    validator: (value) => value == null || value.isEmpty
+                        ? "Field is empty"
+                        : null,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Select Category",
+                        style: TextStyle(color: Colors.red),
                       ),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "field is empty";
-                          }
-                        },
-                        controller: _genderController,
-                        decoration: InputDecoration(
-                            prefix: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                iconEnabledColor: Colors.black,
-                                underline: Container(
-                                  color: Colors.white,
-                                ),
-                                value: dropdownvalue,
-                                dropdownColor: Colors.teal[300],
-                                borderRadius: BorderRadius.circular(40),
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: items.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue = newValue!;
-                                    _genderController.text = newValue;
-                                  });
-                                },
-                              ),
+                      DropdownButton(
+                        iconEnabledColor: Colors.red,
+                        underline: Container(color: Colors.white),
+                        value: categoryDropdownValue,
+                        dropdownColor: Colors.teal[300],
+                        borderRadius: BorderRadius.circular(40),
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: categoryItems.map((String item) {
+                          return DropdownMenuItem(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: TextStyle(color: Colors.red),
                             ),
-                            hintText: "click here to select gender",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 20, right: 20, bottom: 5, top: 5),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "field is empty";
-                          } else if (!value.isValidEmail()) {
-                            return "Invalid email format";
-                          }
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            categoryDropdownValue = newValue!;
+                            _categoryController.text = newValue;
+                          });
                         },
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
-                            hintText: "Email",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "field is empty";
-                          }
-                        },
-                        controller: _numberController,
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.phone),
-                            hintText: "+91",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        maxLength: 10,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(
-                              r'[0-9]')), // Allow only numeric characters
-                        ],
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          "Select Category",
-                          style: TextStyle(color: Colors.red),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26, right: 140),
+                    child: TextFormField(
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: categoryDropdownValue,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        DropdownButton(
-                          iconEnabledColor: Colors.red,
-                          underline: Container(
-                            color: Colors.white,
-                          ),
-                          value: categoryDropdownValue,
-                          dropdownColor: Colors.teal[300],
-                          borderRadius: BorderRadius.circular(40),
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: categoryItems.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(
-                                items,
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              categoryDropdownValue = newValue!;
-                              _categoryController.text = newValue!;
-                              // You can perform any other actions here when the value changes
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 26, right: 140),
-                      child: TextFormField(
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            hintText: categoryDropdownValue,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
-                    SizedBox(
-                      height: 26,
+                  ),
+                  MaterialButton(
+                    color: Colors.black,
+                    onPressed: _updateEmployee,
+                    child: Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    MaterialButton(
-                        color: Colors.green,
-                        onPressed: () {
-                          _updateEmployee();
-                        },
-                        child: Text("Add")),
-                  ]))),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextFormField({
+    required TextEditingController controller,
+    required String hintText,
+    Widget? prefixIcon,
+    Widget? prefix,
+    int? maxLength,
+    List<TextInputFormatter>? inputFormatters,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      child: TextFormField(
+        controller: controller,
+        maxLength: maxLength,
+        inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
+        validator: validator,
+        decoration: InputDecoration(
+          prefixIcon: prefixIcon,
+          prefix: prefix,
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
   }
 
   void _updateEmployee() {
-    final editedname = _nameController.text.trim();
-    final editedcategory = _categoryController.text.trim();
+    final editedName = _nameController.text.trim();
+    final editedCategory = _categoryController.text.trim();
     final editedGender = _genderController.text.trim();
     final editedEmail = _emailController.text.trim();
-    final editednumber = _numberController.text.trim();
-    if (editedname.isEmpty ||
-        editedGender.isEmpty ||
-        editedEmail.isEmpty ||
-        editednumber.isEmpty ||
-        editedcategory.isEmpty ||
-        pickedImage == null) {
-      return;
-    }
-    final updatedEmployee = EmployeeModel(
-      name: editedname,
-      gender: editedGender,
-      email: editedEmail,
-      number: editednumber,
-      category: editedcategory,
-      image: pickedImage!,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        'Updated Successfully',
-        style: TextStyle(color: Colors.white),
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.black,
-    ));
-    editemployee(widget.index, updatedEmployee);
+    final editedNumber = _numberController.text.trim();
 
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => BottomBar1()));
+    String updatedImage = pickedImage ?? widget.image;
+
+    if (imageUpdated && pickedImage != null) {
+      updatedImage = pickedImage!;
+    }
+
+    if (_formkey.currentState?.validate() ?? false) {
+      final updatedEmployee = EmployeeModel(
+        name: editedName,
+        gender: editedGender,
+        email: editedEmail,
+        number: editedNumber,
+        category: editedCategory,
+        image: updatedImage,
+        index: widget.index,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Updated Successfully',
+            style: TextStyle(color: Colors.white),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.black,
+        ),
+      );
+
+      editemployee(widget.index, updatedEmployee);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BottomBar1(
+            companyname: widget.companyname,
+            updatedImage: widget.image,
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -356,7 +368,7 @@ class Imagebringing {
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(this);
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+    ).hasMatch(this);
   }
 }

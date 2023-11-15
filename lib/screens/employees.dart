@@ -5,7 +5,8 @@ import 'package:app/tabs/low.dart';
 import 'package:flutter/material.dart';
 
 class Employeescreen extends StatelessWidget {
-  const Employeescreen({super.key});
+  final String companyname;
+  const Employeescreen({super.key, required this.companyname});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class Employeescreen extends StatelessWidget {
         length: 4,
         child: SafeArea(
             child: Scaffold(
+          backgroundColor: Colors.teal[100],
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.teal[400],
@@ -36,10 +38,10 @@ class Employeescreen extends StatelessWidget {
                 ]),
           ),
           body: TabBarView(children: [
-            Allscreen(),
-            Bestscreen(),
-            Averagescreen(),
-            Lowscreen(),
+            Allscreen(companyname: companyname),
+            Bestscreen(companyname: companyname),
+            Averagescreen(companyname: companyname),
+            Lowscreen(companyname: companyname),
           ]),
         )));
   }

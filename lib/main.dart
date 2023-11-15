@@ -5,6 +5,8 @@ import 'package:app/widget/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+const SAVE_KEY_NAME = 'UserLoggedIn';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
-      home: SplashScreen(),
+      home: Splashscreen(),
       debugShowCheckedModeBanner: false,
     );
   }

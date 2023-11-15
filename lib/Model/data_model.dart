@@ -3,6 +3,7 @@ part 'data_model.g.dart';
 
 @HiveType(typeId: 0)
 class EmployeeModel {
+  int? index;
   @HiveField(0)
   final String name;
 
@@ -22,6 +23,7 @@ class EmployeeModel {
   final String image;
 
   EmployeeModel({
+    this.index,
     required this.name,
     required this.gender,
     required this.email,

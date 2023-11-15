@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Chartscreen extends StatefulWidget {
+  final String companyname;
+  const Chartscreen({super.key, required this.companyname});
   @override
   State<Chartscreen> createState() => _Chart_screenState();
 }
@@ -22,7 +24,7 @@ class _Chart_screenState extends State<Chartscreen> {
         backgroundColor: Colors.teal[100],
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.teal[300], // Updated app bar color
           title: Text("Chart"),
           centerTitle: true,
         ),

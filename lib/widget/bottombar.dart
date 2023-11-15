@@ -8,8 +8,12 @@ import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar1 extends StatefulWidget {
+  final String companyname;
   BottomBar1({
     super.key,
+    required this.companyname,
+    required String updatedImage,
+
     // required EmployeeModel employee,
   });
 
@@ -18,35 +22,43 @@ class BottomBar1 extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar1> {
-  int _currentindex = 0;
-
-  final screens = [
-    HomeScreen(
+  int currentindex = 0;
+  List<Widget> screens = [];
+  late Widget currentScreen;
+  @override
+  void initState() {
+    super.initState();
+    screens = [
+      HomeScreen(
+        companyname: widget.companyname,
         employee: EmployeeModel(
             name: '',
             gender: '',
             email: '',
             number: '',
             category: "",
-            image: "")),
-    Employeescreen(),
-    Chartscreen(),
-    SettingsScreen(),
-  ];
+            image: ""),
+      ),
+      Employeescreen(companyname: widget.companyname),
+      Chartscreen(companyname: widget.companyname),
+      SettingsScreen(companyname: widget.companyname),
+    ];
+    currentScreen = screens[currentindex];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_currentindex],
+      body: screens[currentindex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.teal[300],
 
         // unselectedItemColor: Colors.black,
-        currentIndex: _currentindex,
+        currentIndex: currentindex,
         onTap: (index) {
           setState(() {
-            _currentindex = index;
+            currentindex = index;
           });
         },
         items: [

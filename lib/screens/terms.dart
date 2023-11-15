@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Terms_Screen extends StatelessWidget {
-  const Terms_Screen({super.key});
+  final String companyname;
+  const Terms_Screen({super.key, required this.companyname});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
