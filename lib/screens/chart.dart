@@ -21,10 +21,10 @@ class _Chart_screenState extends State<Chartscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.teal[100],
+        backgroundColor: Colors.orange[400],
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.teal[300], // Updated app bar color
+          backgroundColor: Colors.orange[200], // Updated app bar color
           title: Text("Chart"),
           centerTitle: true,
         ),

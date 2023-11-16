@@ -160,7 +160,7 @@ class _AddScreenState extends State<AddScreen> {
                                 color: Colors.white,
                               ),
                               value: dropdownvalue,
-                              dropdownColor: Colors.teal[300],
+                              dropdownColor: Colors.white,
                               borderRadius: BorderRadius.circular(40),
                               icon: const Icon(Icons.keyboard_arrow_down),
                               items: items.map((String items) {
@@ -239,7 +239,7 @@ class _AddScreenState extends State<AddScreen> {
                           color: Colors.white,
                         ),
                         value: categoryDropdownValue,
-                        dropdownColor: Colors.teal[300],
+                        dropdownColor: Colors.white,
                         borderRadius: BorderRadius.circular(40),
                         icon: const Icon(Icons.keyboard_arrow_down),
                         items: categoryItems.map((String items) {

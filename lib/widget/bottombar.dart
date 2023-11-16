@@ -52,7 +52,7 @@ class _BottomBarState extends State<BottomBar1> {
       body: screens[currentindex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.teal[300],
+        backgroundColor: Colors.orange[200],
 
         // unselectedItemColor: Colors.black,
         currentIndex: currentindex,

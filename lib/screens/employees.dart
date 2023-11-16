@@ -14,10 +14,10 @@ class Employeescreen extends StatelessWidget {
         length: 4,
         child: SafeArea(
             child: Scaffold(
-          backgroundColor: Colors.teal[100],
+          backgroundColor: Colors.orange[100],
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.teal[400],
+            backgroundColor: Colors.orange[200],
             bottom: TabBar(
                 labelColor: Colors.black,
                 indicatorColor: Colors.brown,

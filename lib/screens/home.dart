@@ -32,13 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.teal[300], // Updated app bar color
-          leading: Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
+          backgroundColor: Colors.orange[200],
         ),
-        backgroundColor: Colors.tealAccent, // Updated background color
+        backgroundColor: Colors.orange[400],
         body: Center(
           child: Column(
             children: [
@@ -47,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.teal, // Updated container color
+                  color: Colors.orange[600],
                 ),
                 child: Column(
                   children: [
@@ -69,9 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.teal[600], // Updated container color
-                      ),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.orange[400]),
                     ),
                     SizedBox(
                       height: 80,
@@ -79,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       height: 30,
                       width: 320,
-                      color: Colors.teal, // Updated container color
+                      color: Colors.orange[600],
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -93,25 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white, // Updated button color
+                              primary: Colors.orange,
                             ),
                             child: Text(
                               "Add",
-                              style: TextStyle(
-                                color: Colors.indigo,
-                              ),
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white, // Updated button color
+                              primary: Colors.orange,
                             ),
                             child: Text(
                               "Months",
-                              style: TextStyle(
-                                color: Colors.indigo,
-                              ),
                             ),
                           ),
                         ],
@@ -129,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 400,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.teal[900], // Updated container color
+                    color: Colors.orange[600],
                   ),
                   child: Builder(
                     builder: (context) {
@@ -144,8 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                color: Colors.deepPurpleAccent[
-                                    800], // Updated card color
+                                color: Colors.orange[100],
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).push(
@@ -189,6 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icons.edit,
                                             color: Colors.black,
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          width: 4,
                                         ),
                                         GestureDetector(
                                           onTap: () {

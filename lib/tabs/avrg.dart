@@ -20,7 +20,7 @@ class _AveragescreenState extends State<Averagescreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.teal[100],
+        backgroundColor: Colors.orange[400],
         body: Builder(builder: (context) {
           return ValueListenableBuilder(
             valueListenable: employeeListNotifier,
@@ -48,7 +48,7 @@ class _AveragescreenState extends State<Averagescreen> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      color: Colors.deepPurpleAccent[800],
+                      color: Colors.orange[100],
                       child: ListTile(
                         title: Text(
                           data.name,
@@ -83,6 +83,9 @@ class _AveragescreenState extends State<Averagescreen> {
                                   Icons.edit,
                                   color: Colors.black,
                                 )),
+                            SizedBox(
+                              width: 10,
+                            ),
                             GestureDetector(
                                 onTap: () {
                                   deleteemployee(index);
