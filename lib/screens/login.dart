@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, sort_child_properties_last
-
 import 'package:app/main.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +31,7 @@ class _LoginState extends State<Loginscreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _inputField(
-                "username",
+                "company name",
                 _usernameController,
                 isUsername: true,
               ),
@@ -82,6 +80,12 @@ class _LoginState extends State<Loginscreen> {
           print('empty value');
         }
       },
+      style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+        backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+      ),
       child: const SizedBox(
         width: double.infinity,
         child: Text(
@@ -89,12 +93,6 @@ class _LoginState extends State<Loginscreen> {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20),
         ),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 16),
       ),
     );
   }
@@ -105,6 +103,7 @@ class _LoginState extends State<Loginscreen> {
     await sharedPrefs.setBool(SAVE_KEY_NAME, true);
     await sharedPrefs.setString('username', username);
 
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       ctx,
       MaterialPageRoute(

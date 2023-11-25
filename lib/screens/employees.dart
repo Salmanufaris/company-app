@@ -1,7 +1,7 @@
-import 'package:app/tabs/all.dart';
-import 'package:app/tabs/best.dart';
-import 'package:app/tabs/avrg.dart';
-import 'package:app/tabs/low.dart';
+import 'package:app/screens/tabs/allscreens.dart';
+import 'package:app/screens/tabs/bestscreens.dart';
+import 'package:app/screens/tabs/averagescreens.dart';
+import 'package:app/screens/tabs/lowscreens.dart';
 import 'package:flutter/material.dart';
 
 class Employeescreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class Employeescreen extends StatelessWidget {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.orange[200],
-            bottom: TabBar(
+            bottom: const TabBar(
                 labelColor: Colors.black,
                 indicatorColor: Colors.brown,
                 indicatorWeight: 3,

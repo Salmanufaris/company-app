@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/screens/detail.dart';
@@ -25,12 +24,13 @@ class _LowscreenState extends State<Lowscreen> {
             valueListenable: employeeListNotifier,
             builder: (BuildContext ctx, List<EmployeeModel> employeeList,
                 Widget? child) {
-              final filteredEmployeList = employeeList
-                  .where((Employe) => Employe.category?.contains('Low') == true)
+              final filteredEmployeeList = employeeList
+                  .where(
+                      (employee) => employee.category?.contains('Low') == true)
                   .toList();
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  final data = filteredEmployeList[index];
+                  final data = filteredEmployeeList[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -50,7 +50,7 @@ class _LowscreenState extends State<Lowscreen> {
                       child: ListTile(
                         title: Text(
                           data.name,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                         leading: CircleAvatar(
                           radius: 30,
@@ -58,47 +58,49 @@ class _LowscreenState extends State<Lowscreen> {
                         ),
                         subtitle: Text(
                           data.category,
-                          style: TextStyle(color: Colors.red),
+                          style: const TextStyle(color: Colors.red),
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => EditScreen(
-                                            companyname: "",
-                                            category: data.category,
-                                            email: data.email,
-                                            gender: data.gender,
-                                            image: data.image,
-                                            index: index,
-                                            name: data.name,
-                                            number: data.number,
-                                          )));
-                                },
-                                child: Icon(
-                                  Icons.edit,
-                                  color: Colors.black,
-                                )),
-                            SizedBox(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EditScreen(
+                                          companyname: "",
+                                          category: data.category,
+                                          email: data.email,
+                                          gender: data.gender,
+                                          image: data.image,
+                                          index: index,
+                                          name: data.name,
+                                          number: data.number,
+                                        )));
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
-                                onTap: () {
-                                  deleteemployee(index);
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                )),
+                              onTap: () {
+                                _showDeleteDialog(context, index);
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-                itemCount: filteredEmployeList.length,
+                itemCount: filteredEmployeeList.length,
               );
             },
           );
@@ -106,4 +108,34 @@ class _LowscreenState extends State<Lowscreen> {
       ),
     );
   }
+}
+
+void _showDeleteDialog(BuildContext context, int index) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Delete Employee"),
+        content: const Text("Are you sure you want to delete this employee?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "No",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteemployee(index);
+              Navigator.of(context).pop();
+            },
+            child: const Text("Yes"),
+          ),
+        ],
+      );
+    },
+  );
 }

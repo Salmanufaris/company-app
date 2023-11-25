@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
+import 'package:app/screens/sub/dropdown_things.dart';
+import 'package:app/screens/sub/add_edit_image_email.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,23 +22,8 @@ class _AddScreenState extends State<AddScreen> {
   final _numberController = TextEditingController();
   final _categoryController = TextEditingController();
 
-  String categoryDropdownValue = 'Best';
-  var categoryItems = [
-    'Best',
-    'Average',
-    'Low',
-  ];
-
-  String dropdownvalue = 'Male';
-  var items = [
-    'Male',
-    'Female',
-    'others',
-  ];
-  String selectedvalue = "";
   XFile? pickedimage;
   final _formkey = GlobalKey<FormState>();
-  String email = 'test@example.com';
 
   Future<void> _pickImage() async {
     showDialog(
@@ -85,11 +72,9 @@ class _AddScreenState extends State<AddScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => BottomBar1(
-                      companyname: widget.companyname, updatedImage: "")));
+              Navigator.of(context).pop(true);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             )),
@@ -120,7 +105,7 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 4),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 4),
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -140,7 +125,7 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 4,
                       left: 20,
                       right: 20,
@@ -183,8 +168,8 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 5),
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 20, bottom: 5, top: 5),
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -195,41 +180,44 @@ class _AddScreenState extends State<AddScreen> {
                       },
                       controller: _emailController,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
                           hintText: "Email",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                    ),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextFormField(
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "field is empty";
+                        if (value == null || value.trim().isEmpty) {
+                          return "Field is empty";
                         }
+                        String phoneNumber = value.trim();
+                        if (!RegExp(r'^[6789]\d{9}$').hasMatch(phoneNumber)) {
+                          return 'Please enter a valid Indian mobile number';
+                        }
+                        return null;
                       },
                       controller: _numberController,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          hintText: "+91",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
+                        prefixIcon: const Icon(Icons.phone),
+                        hintText: "+91",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
                       maxLength: 10,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'[0-9]')), // Allow only numeric characters
+                        FilteringTextInputFormatter.digitsOnly,
                       ],
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.phone,
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         "Select Category",
                         style: TextStyle(color: Colors.red),
                       ),
@@ -247,7 +235,7 @@ class _AddScreenState extends State<AddScreen> {
                             value: items,
                             child: Text(
                               items,
-                              style: TextStyle(color: Colors.red),
+                              style: const TextStyle(color: Colors.red),
                             ),
                           );
                         }).toList(),
@@ -255,7 +243,6 @@ class _AddScreenState extends State<AddScreen> {
                           setState(() {
                             categoryDropdownValue = newValue!;
                             _categoryController.text = newValue!;
-                            // You can perform any other actions here when the value changes
                           });
                         },
                       )
@@ -271,17 +258,20 @@ class _AddScreenState extends State<AddScreen> {
                               borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 26,
                   ),
                   MaterialButton(
-                      color: Colors.green,
+                      color: Colors.black,
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
                           onAddStudentButtonClicked(context);
                         }
                       },
-                      child: Text("Add")),
+                      child: const Text(
+                        "Add",
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ]))),
       ),
     ));
@@ -318,21 +308,5 @@ class _AddScreenState extends State<AddScreen> {
       image: pickedimage?.path ?? '',
     );
     addEmployee(_employee);
-  }
-}
-
-class Imagebringing {
-  static Future<XFile?> pickImage(ImageSource source) async {
-    final ImagePicker imagePicker = ImagePicker();
-    final picked = await imagePicker.pickImage(source: source);
-    return picked;
-  }
-}
-
-extension EmailValidator on String {
-  bool isValidEmail() {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(this);
   }
 }

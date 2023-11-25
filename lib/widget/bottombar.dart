@@ -1,9 +1,7 @@
 import 'package:app/Model/data_model.dart';
-
 import 'package:app/screens/employees.dart';
 import 'package:app/screens/chart.dart';
 import 'package:app/screens/home.dart';
-
 import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
@@ -32,12 +30,13 @@ class _BottomBarState extends State<BottomBar1> {
       HomeScreen(
         companyname: widget.companyname,
         employee: EmployeeModel(
-            name: '',
-            gender: '',
-            email: '',
-            number: '',
-            category: "",
-            image: ""),
+          name: '',
+          gender: '',
+          email: '',
+          number: '',
+          category: "",
+          image: "",
+        ),
       ),
       Employeescreen(companyname: widget.companyname),
       Chartscreen(companyname: widget.companyname),
@@ -61,7 +60,7 @@ class _BottomBarState extends State<BottomBar1> {
             currentindex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -73,8 +72,7 @@ class _BottomBarState extends State<BottomBar1> {
             label: "Employees",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.chat_rounded, color: Colors.black),
-              label: "Chart"),
+              icon: Icon(Icons.bar_chart, color: Colors.black), label: "Chart"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings, color: Colors.black),
               label: "Settings"),

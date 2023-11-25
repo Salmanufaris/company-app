@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:app/screens/sub/dropdown_things.dart';
+import 'package:app/screens/sub/add_edit_image_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,11 +29,11 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _genderController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _numberController = TextEditingController();
-  TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
   String? pickedImage;
   bool imageUpdated = false;
 
@@ -100,14 +102,7 @@ class _EditScreenState extends State<EditScreen> {
     }
   }
 
-  String categoryDropdownValue = 'Best';
-  var categoryItems = ['Best', 'Average', 'Low'];
-
-  String dropdownvalue = 'Male';
-  var items = ['Male', 'Female', 'others'];
-
   final _formkey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -116,16 +111,9 @@ class _EditScreenState extends State<EditScreen> {
           backgroundColor: Colors.white,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => BottomBar1(
-                    companyname: widget.companyname,
-                    updatedImage: "",
-                  ),
-                ),
-              );
+              Navigator.of(context).pop(true);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -194,7 +182,7 @@ class _EditScreenState extends State<EditScreen> {
                   _buildTextFormField(
                     controller: _emailController,
                     hintText: "Email",
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Field is empty";
@@ -207,7 +195,7 @@ class _EditScreenState extends State<EditScreen> {
                   _buildTextFormField(
                     controller: _numberController,
                     hintText: "+91",
-                    prefixIcon: Icon(Icons.phone),
+                    prefixIcon: const Icon(Icons.phone),
                     maxLength: 10,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
@@ -220,7 +208,7 @@ class _EditScreenState extends State<EditScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         "Select Category",
                         style: TextStyle(color: Colors.red),
                       ),
@@ -236,7 +224,7 @@ class _EditScreenState extends State<EditScreen> {
                             value: item,
                             child: Text(
                               item,
-                              style: TextStyle(color: Colors.red),
+                              style: const TextStyle(color: Colors.red),
                             ),
                           );
                         }).toList(),
@@ -264,7 +252,7 @@ class _EditScreenState extends State<EditScreen> {
                   MaterialButton(
                     color: Colors.black,
                     onPressed: _updateEmployee,
-                    child: Text(
+                    child: const Text(
                       "Save",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -289,7 +277,7 @@ class _EditScreenState extends State<EditScreen> {
     String? Function(String?)? validator,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       child: TextFormField(
         controller: controller,
         maxLength: maxLength,
@@ -333,7 +321,7 @@ class _EditScreenState extends State<EditScreen> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'Updated Successfully',
             style: TextStyle(color: Colors.white),
@@ -354,21 +342,5 @@ class _EditScreenState extends State<EditScreen> {
         ),
       );
     }
-  }
-}
-
-class Imagebringing {
-  static Future<XFile?> pickImage(ImageSource source) async {
-    final ImagePicker imagePicker = ImagePicker();
-    final picked = await imagePicker.pickImage(source: source);
-    return picked;
-  }
-}
-
-extension EmailValidator on String {
-  bool isValidEmail() {
-    return RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
-    ).hasMatch(this);
   }
 }

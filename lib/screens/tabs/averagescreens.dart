@@ -52,7 +52,7 @@ class _AveragescreenState extends State<Averagescreen> {
                       child: ListTile(
                         title: Text(
                           data.name,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                         leading: CircleAvatar(
                           radius: 30,
@@ -60,7 +60,7 @@ class _AveragescreenState extends State<Averagescreen> {
                         ),
                         subtitle: Text(
                           data.category,
-                          style: TextStyle(color: Colors.red),
+                          style: const TextStyle(color: Colors.red),
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -79,18 +79,18 @@ class _AveragescreenState extends State<Averagescreen> {
                                             number: data.number,
                                           )));
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.edit,
                                   color: Colors.black,
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  deleteemployee(index);
+                                  _showDeleteDialog(context, index);
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 )),
@@ -108,4 +108,37 @@ class _AveragescreenState extends State<Averagescreen> {
       ),
     );
   }
+}
+
+void _showDeleteDialog(BuildContext context, int index) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Delete Employee"),
+        content: const Text("Are you sure you want to delete this employee?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "No",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteemployee(index);
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "Yes",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

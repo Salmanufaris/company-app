@@ -1,4 +1,5 @@
 import 'package:app/Model/data_model.dart';
+import 'package:app/screens/chart.dart';
 
 import 'package:app/widget/splash.dart';
 
@@ -10,9 +11,11 @@ const SAVE_KEY_NAME = 'UserLoggedIn';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
   if (!Hive.isAdapterRegistered(EmployeeModelAdapter().typeId)) {
     Hive.registerAdapter(EmployeeModelAdapter());
   }
+
   runApp(const MyApp());
 }
 

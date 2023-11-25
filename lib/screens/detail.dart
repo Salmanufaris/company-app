@@ -30,118 +30,115 @@ class _DetailscreenState extends State<Detailscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.orange[400],
         appBar: AppBar(
-          title: Text("Detail Page"),
+          backgroundColor: Colors.yellow[200],
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+          title: const Text(
+            "Detail Page",
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
-          backgroundColor: Colors.teal,
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 160,
-                width: 160,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: FileImage(File(widget.image)),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(19),
-                  border: Border.all(
-                    color: Colors.teal, // Border color
-                    width: 4, // Border width
-                  ),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 340, bottom: 10),
-                child: Text(
-                  "Name",
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 280),
-                child: Text(
-                  widget.name,
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Gender",
-                    style: TextStyle(color: Colors.red, fontSize: 16),
-                  ),
-                  Text(
-                    "Category",
-                    style: TextStyle(color: Colors.red, fontSize: 16),
-                  )
-                ],
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.gender,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Text(
-                      widget.catogery,
-                      style: TextStyle(fontSize: 18),
+                Container(
+                  height: 160,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: FileImage(File(widget.image)),
+                      fit: BoxFit.cover,
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 0, bottom: 10),
-                child: Text(
-                  'Email',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                    borderRadius: BorderRadius.circular(19),
+                    border: Border.all(
+                      color: Colors.white, // Border color
+                      width: 4, // Border width
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                widget.email,
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Number",
-                    style: TextStyle(color: Colors.red, fontSize: 16),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 450,
+                  width: 370,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
                   ),
-                  Text(
-                    widget.number,
-                    style: TextStyle(fontSize: 18),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        "Name",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(widget.name),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "Gender",
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          Text(
+                            "Category",
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Text(widget.gender), Text(widget.catogery)],
+                      ),
+                      SizedBox(
+                        height: 120,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "Email :",
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          Text(
+                            "Number",
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Text(widget.email), Text(widget.number)],
+                      ),
+                    ],
                   ),
-                ],
-              )
-            ],
-          ),
-        ),
+                ),
+              ],
+            )),
       ),
     );
   }
