@@ -39,7 +39,7 @@ class _BottomBarState extends State<BottomBar1> {
         ),
       ),
       Employeescreen(companyname: widget.companyname),
-      Chartscreen(companyname: widget.companyname),
+      chart(),
       SettingsScreen(companyname: widget.companyname),
     ];
     currentScreen = screens[currentindex];

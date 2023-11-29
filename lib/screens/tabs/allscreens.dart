@@ -98,6 +98,13 @@ class _AllscreenState extends State<Allscreen> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    Text(
+                                      employeeList[index].number,
+                                      style: TextStyle(color: Colors.purple),
+                                    ),
+                                    SizedBox(
+                                      width: 6,
+                                    ),
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(

@@ -63,6 +63,13 @@ class _LowscreenState extends State<Lowscreen> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            Text(
+                              employeeList[index].number,
+                              style: TextStyle(color: Colors.purple),
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(

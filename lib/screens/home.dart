@@ -165,6 +165,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       trailing: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
+                                          Text(
+                                            employeeList[index].number,
+                                            style:
+                                                TextStyle(color: Colors.purple),
+                                          ),
+                                          SizedBox(
+                                            width: 6,
+                                          ),
                                           GestureDetector(
                                             onTap: () {
                                               _navigateToEditScreen(

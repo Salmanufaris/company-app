@@ -1,113 +1,94 @@
+import 'dart:math';
+import 'package:app/db/functions.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
-class Chartscreen extends StatefulWidget {
-  final String companyname;
-
-  const Chartscreen({Key? key, required this.companyname}) : super(key: key);
+class chart extends StatefulWidget {
+  const chart({Key? key}) : super(key: key);
 
   @override
-  State<Chartscreen> createState() => _ChartScreenState();
+  State<chart> createState() => _chartState();
 }
 
-class _ChartScreenState extends State<Chartscreen> {
-  late List<GDPData> _chartData;
-  late String _selectedRange;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedRange = "Day";
-    _updateChartData();
-  }
-
+class _chartState extends State<chart> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    List skill = employeeListNotifier.value;
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 1,
       child: Scaffold(
-        backgroundColor: Colors.orange[400],
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.orange[200],
-          title: const Text("Chart"),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            _buildFilterDropdown(),
-            Expanded(
-              child: SfCircularChart(
-                legend: const Legend(
-                  isVisible: true,
-                  overflowMode: LegendItemOverflowMode.wrap,
-                ),
-                series: <CircularSeries>[
-                  DoughnutSeries<GDPData, String>(
-                    dataSource: _chartData,
-                    xValueMapper: (GDPData data, _) => data.continent,
-                    yValueMapper: (GDPData data, _) => data.gdp,
-                    dataLabelSettings: const DataLabelSettings(
-                      isVisible: true,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFilterDropdown() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          const Text("Filter: "),
-          DropdownButton<String>(
-            value: _selectedRange,
-            items: ["Day", "Week"].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? value) {
-              if (value != null) {
-                setState(() {
-                  _selectedRange = value;
-                  _updateChartData();
-                });
-              }
-            },
+          backgroundColor: Colors.orange[300],
+          title: const Text(
+            'chart',
+            style: TextStyle(color: Colors.black),
           ),
-        ],
+          centerTitle: true, // Center-align the title text
+          elevation: 0,
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(text: ''),
+            ],
+            labelColor: Colors.white, // Set the selected tab text color
+            unselectedLabelColor: Color.fromARGB(
+                255, 155, 149, 149), // Set the unselected tab text color
+            labelStyle: TextStyle(
+              fontSize: 16, // You can adjust the font size if needed
+            ),
+          ),
+        ),
+        body: TabBarView(
+          children: [chartt(skill: skill)],
+        ),
       ),
     );
-  }
-
-  void _updateChartData() {
-    if (_selectedRange == "Day") {
-      _chartData = [
-        GDPData("Best", 50),
-        GDPData("Average", 25),
-        GDPData("Low", 25),
-      ];
-    } else if (_selectedRange == "Week") {
-      _chartData = [
-        GDPData("Best", 40),
-        GDPData("Average", 30),
-        GDPData("Low", 30),
-      ];
-    } else {
-      _chartData = [];
-    }
   }
 }
 
-class GDPData {
-  GDPData(this.continent, this.gdp);
-  final String continent;
-  final int gdp;
+Widget chartt({required skill}) {
+  return ValueListenableBuilder(
+    valueListenable: employeeListNotifier,
+    builder: (context, value, child) {
+      return SizedBox(
+        height: 500,
+        child: PieChart(
+          PieChartData(
+            sections: List.generate(
+              skill.length,
+              (index) {
+                double cost = double.parse(skill[index].number);
+                double totalCost = calculateTotalchart(skill);
+                double percentage = (cost / totalCost) * 100;
+                final name = skill[index].name;
+
+                return PieChartSectionData(
+                  badgePositionPercentageOffset: 1.1,
+                  titlePositionPercentageOffset: .4,
+                  color: getRandomColor(),
+                  value: percentage,
+                  title: '''₹ ${cost.toStringAsFixed(2)}
+      (${percentage.toStringAsFixed(2)}%)
+      $name
+      ''',
+                  radius: 50,
+                  titleStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0)),
+                );
+              },
+            ),
+            sectionsSpace: 5,
+            centerSpaceRadius: 90,
+            startDegreeOffset: 0,
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Color getRandomColor() {
+  return Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 }

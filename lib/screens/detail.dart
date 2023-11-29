@@ -49,8 +49,8 @@ class _DetailscreenState extends State<Detailscreen> {
           centerTitle: true,
         ),
         body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: 800,
+            width: 380,
             child: Column(
               children: [
                 const SizedBox(

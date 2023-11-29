@@ -34,3 +34,13 @@ Future<void> deleteemployee(int index) async {
   employeeDB.deleteAt(index);
   getAllEmployee();
 }
+
+//chart calcultion
+
+double calculateTotalchart(List<EmployeeModel> perfomance) {
+  double totalCost = 0;
+  for (var per in perfomance) {
+    totalCost += double.parse(per.number);
+  }
+  return totalCost;
+}

@@ -189,29 +189,26 @@ class _AddScreenState extends State<AddScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return "Field is empty";
-                        }
-                        String phoneNumber = value.trim();
-                        if (!RegExp(r'^[6789]\d{9}$').hasMatch(phoneNumber)) {
-                          return 'Please enter a valid Indian mobile number';
-                        }
-                        return null;
-                      },
                       controller: _numberController,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.phone),
-                        hintText: "+91",
+                        prefixIcon: Icon(Icons.percent),
+                        hintText: "percentage",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      maxLength: 10,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a percentage';
+                        }
+                        double enteredValue =
+                            double.tryParse(value.replaceAll('%', '')) ?? -1;
+
+                        if (enteredValue < 0 || enteredValue > 100) {
+                          return 'Please enter a valid percentage between 0% and 100%';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Row(
