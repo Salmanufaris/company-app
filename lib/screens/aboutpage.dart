@@ -19,7 +19,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.black,
                 )),
@@ -30,7 +30,7 @@ class _AboutScreenState extends State<AboutScreen> {
             centerTitle: true,
             backgroundColor: Colors.orange[200],
           ),
-          body: SingleChildScrollView(
+          body: const SingleChildScrollView(
             child: Column(children: [
               SizedBox(
                 height: 10,

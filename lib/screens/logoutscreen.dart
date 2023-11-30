@@ -1,21 +1,19 @@
-import 'package:app/screens/home.dart';
-import 'package:app/widget/bottombar.dart';
 import 'package:hive/hive.dart';
-
+import 'package:app/screens/loginpage.dart';
 import 'package:flutter/material.dart';
 
-Future<void> resetAndClearData(BuildContext context) async {
-  bool confirmReset = await showDialog(
+Future<void> logoutAndClearData(BuildContext context) async {
+  bool confirmLogout = await showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: const Text(
-          "Confirm Reset",
+          "Confirm Logout",
           style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
         ),
         content: const Text(
-          "This will reset the App. Your data will be cleared. Do you want to continue?",
+          "This will logout the App. Your data will be cleared. Do you want to continue?",
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
         actions: <Widget>[
@@ -30,20 +28,14 @@ Future<void> resetAndClearData(BuildContext context) async {
           ),
           TextButton(
             child: const Text(
-              "Reset",
+              "Logout",
               style: TextStyle(color: Color.fromARGB(255, 245, 0, 0)),
             ),
             onPressed: () async {
               await Hive.close();
               await Hive.deleteBoxFromDisk('employee_db');
-              ;
-              var companyname;
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => BottomBar1(
-                          companyname: "",
-                          updatedImage: "",
-                        )),
+                MaterialPageRoute(builder: (context) => const Loginscreen()),
               );
             },
           ),

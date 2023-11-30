@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-import 'package:app/screens/detail.dart';
-import 'package:app/screens/edit.dart';
-import 'package:app/screens/sub/filter.dart';
+import 'package:app/screens/detailpage.dart';
+import 'package:app/screens/editpage.dart';
+import 'package:app/screens/tabs/allscreenfilter.dart';
 import 'package:flutter/material.dart';
 
 class Allscreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class Allscreen extends StatefulWidget {
   const Allscreen({Key? key, required this.companyname}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AllscreenState createState() => _AllscreenState();
 }
 
@@ -23,16 +24,32 @@ class _AllscreenState extends State<Allscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange[400],
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.amber[600],
+          backgroundColor: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.only(right: 200),
+            child: TextButton(
+              onPressed: () {
+                showSearch(
+                    context: context,
+                    delegate: EmployeeSearch(
+                      filteredEmployeeList,
+                    ));
+              },
+              child: Text(
+                "search.......",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: EmployeeSearchDelegate(
+                delegate: EmployeeSearch(
                   filteredEmployeeList,
                 ),
               );
@@ -100,9 +117,10 @@ class _AllscreenState extends State<Allscreen> {
                                   children: [
                                     Text(
                                       employeeList[index].number,
-                                      style: TextStyle(color: Colors.purple),
+                                      style:
+                                          const TextStyle(color: Colors.purple),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 6,
                                     ),
                                     GestureDetector(

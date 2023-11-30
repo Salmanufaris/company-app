@@ -191,7 +191,7 @@ class _AddScreenState extends State<AddScreen> {
                     child: TextFormField(
                       controller: _numberController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.percent),
+                        prefixIcon: const Icon(Icons.percent),
                         hintText: "percentage",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -275,17 +275,17 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> onAddStudentButtonClicked(BuildContext context) async {
-    final _name = _nameController.text.trim();
-    final _gender = _genderController.text.trim();
-    final _email = _emailController.text.trim();
-    final _number = _numberController.text.trim();
-    final _category = _categoryController.text.trim();
+    final name = _nameController.text.trim();
+    final gender = _genderController.text.trim();
+    final email = _emailController.text.trim();
+    final number = _numberController.text.trim();
+    final category = _categoryController.text.trim();
 
-    if (_name.isEmpty ||
-        _gender.isEmpty ||
-        _email.isEmpty ||
-        _number.isEmpty ||
-        _category.isEmpty) {
+    if (name.isEmpty ||
+        gender.isEmpty ||
+        email.isEmpty ||
+        number.isEmpty ||
+        category.isEmpty) {
       return;
     } else {
       Navigator.of(context).push(
@@ -296,14 +296,14 @@ class _AddScreenState extends State<AddScreen> {
                 )),
       );
     }
-    final _employee = EmployeeModel(
-      name: _name,
-      gender: _gender,
-      email: _email,
-      number: _number,
-      category: _category,
+    final employee = EmployeeModel(
+      name: name,
+      gender: gender,
+      email: email,
+      number: number,
+      category: category,
       image: pickedimage?.path ?? '',
     );
-    addEmployee(_employee);
+    addEmployee(employee);
   }
 }

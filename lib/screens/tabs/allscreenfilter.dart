@@ -1,11 +1,11 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/detail.dart';
+import 'package:app/screens/detailpage.dart';
 import 'package:flutter/material.dart';
 
-class EmployeeSearchDelegate extends SearchDelegate {
+class EmployeeSearch extends SearchDelegate {
   final List<EmployeeModel> employeeList;
 
-  EmployeeSearchDelegate(this.employeeList);
+  EmployeeSearch(this.employeeList);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -52,7 +52,7 @@ class EmployeeSearchDelegate extends SearchDelegate {
         .toList();
 
     if (searchResults.isEmpty) {
-      return Center(
+      return const Center(
         child: Text(
           "list is empty",
           style: TextStyle(

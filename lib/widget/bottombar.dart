@@ -1,18 +1,16 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/employees.dart';
-import 'package:app/screens/chart.dart';
-import 'package:app/screens/home.dart';
+import 'package:app/screens/employeespage.dart';
+import 'package:app/screens/chartpage.dart';
+import 'package:app/screens/homepage.dart';
 import 'package:app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar1 extends StatefulWidget {
   final String companyname;
-  BottomBar1({
+  const BottomBar1({
     super.key,
     required this.companyname,
     required String updatedImage,
-
-    // required EmployeeModel employee,
   });
 
   @override
@@ -39,7 +37,7 @@ class _BottomBarState extends State<BottomBar1> {
         ),
       ),
       Employeescreen(companyname: widget.companyname),
-      chart(),
+      const Chart(),
       SettingsScreen(companyname: widget.companyname),
     ];
     currentScreen = screens[currentindex];
@@ -52,8 +50,6 @@ class _BottomBarState extends State<BottomBar1> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.orange[200],
-
-        // unselectedItemColor: Colors.black,
         currentIndex: currentindex,
         onTap: (index) {
           setState(() {

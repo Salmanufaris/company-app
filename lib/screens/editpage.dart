@@ -12,7 +12,7 @@ class EditScreen extends StatefulWidget {
   final String name, gender, email, number, category, image, companyname;
   final int index;
 
-  EditScreen({
+  const EditScreen({
     Key? key,
     required this.name,
     required this.gender,
@@ -48,6 +48,7 @@ class _EditScreenState extends State<EditScreen> {
     super.initState();
   }
 
+  // ignore: unused_element
   Future<void> _pickImage() async {
     final picked = await Imagebringing.pickImage(ImageSource.gallery);
     if (picked != null) {

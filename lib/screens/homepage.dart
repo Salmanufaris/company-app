@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
 import 'package:app/screens/add.dart';
-import 'package:app/screens/detail.dart';
-import 'package:app/screens/edit.dart';
+import 'package:app/screens/detailpage.dart';
+import 'package:app/screens/editpage.dart';
 
 class HomeScreen extends StatefulWidget {
   final EmployeeModel employee;
@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -90,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.orange,
+                                backgroundColor: Colors.orange,
                               ),
                               child: const Text(
                                 "Add",
@@ -167,10 +168,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Text(
                                             employeeList[index].number,
-                                            style:
-                                                TextStyle(color: Colors.purple),
+                                            style: const TextStyle(
+                                                color: Colors.purple),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 6,
                                           ),
                                           GestureDetector(

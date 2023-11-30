@@ -1,8 +1,5 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/chart.dart';
-
 import 'package:app/widget/splash.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter App',
       home: Splashscreen(),
       debugShowCheckedModeBanner: false,
