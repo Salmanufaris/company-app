@@ -1,8 +1,8 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/employeespage.dart';
-import 'package:app/screens/chartpage.dart';
-import 'package:app/screens/homepage.dart';
-import 'package:app/screens/settings.dart';
+import 'package:app/screens/employees_page.dart';
+import 'package:app/screens/chart_page.dart';
+import 'package:app/screens/home_page.dart';
+import 'package:app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar1 extends StatefulWidget {
@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar1> {
       body: screens[currentindex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.orange[200],
+        backgroundColor: Colors.cyan[400],
         currentIndex: currentindex,
         onTap: (index) {
           setState(() {

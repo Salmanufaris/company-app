@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AddScreen extends StatefulWidget {
   final String companyname;
-  AddScreen({Key? key, required this.companyname}) : super(key: key);
+  const AddScreen({Key? key, required this.companyname}) : super(key: key);
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
@@ -111,6 +111,7 @@ class _AddScreenState extends State<AddScreen> {
                         if (value == null || value.isEmpty) {
                           return "field is empty";
                         }
+                        return null;
                       },
                       controller: _nameController,
                       decoration: InputDecoration(
@@ -135,6 +136,7 @@ class _AddScreenState extends State<AddScreen> {
                         if (value == null || value.isEmpty) {
                           return "field is empty";
                         }
+                        return null;
                       },
                       controller: _genderController,
                       decoration: InputDecoration(
@@ -177,6 +179,7 @@ class _AddScreenState extends State<AddScreen> {
                         } else if (!value.isValidEmail()) {
                           return "Invalid email format";
                         }
+                        return null;
                       },
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -239,7 +242,7 @@ class _AddScreenState extends State<AddScreen> {
                         onChanged: (String? newValue) {
                           setState(() {
                             categoryDropdownValue = newValue!;
-                            _categoryController.text = newValue!;
+                            _categoryController.text = newValue;
                           });
                         },
                       )

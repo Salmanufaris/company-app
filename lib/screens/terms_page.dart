@@ -21,7 +21,7 @@ class TermsScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
-          backgroundColor: Colors.orange[200],
+          backgroundColor: Colors.cyan[400],
         ),
         body: const Column(
           children: [
@@ -29,13 +29,11 @@ class TermsScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "1. Data Usage and Security:",
+              "1.Acceptance of Terms:",
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
             Text(
-                ".The App stores employee data categorically, using labels such as Best, Average, and Low."),
-            Text(
-                ".User data is encrypted and stored securely to ensure confidentiality."),
+                ".By using the Employee Performance Management App, you agree to be bound by these terms and conditions. If you do not agree, please refrain from using the App."),
             SizedBox(
               height: 10,
             ),
@@ -44,33 +42,46 @@ class TermsScreen extends StatelessWidget {
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
             Text(
-                ".Users are responsible for the accuracy and relevance of the data entered into the App"),
+                ".Users are responsible for maintaining the confidentiality of their account credentials. Do not share your account information with others."),
             SizedBox(
               height: 10,
             ),
             Text(
-              "3. Filtering Feature:",
+              "3.  Data Accuracy:",
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
-            Text("The App includes a filtering feature on in  screens."),
+            Text(
+                "Users are responsible for providing accurate information when adding or updating employee details. The App owner is not liable for any inaccuracies resulting from user-provided data."),
             SizedBox(
               height: 10,
             ),
             Text(
-              "7. Termination of Usage:",
+              "7.  Privacy and Security:",
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
             Text(
-                "The company reserves the right to terminate user access to the App in case of misuse or violation of terms."),
+                "TThe App prioritizes user privacy and employs reasonable security measures. Review the Privacy Policy for detailed information."),
             SizedBox(
               height: 10,
             ),
             Text(
-              "8. Feedback and Support:",
+              "8. Intellectual Property:",
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
             Text(
-                "Users are welcome to provide feedback for continuous improvement. Contact support at farisvt768@gmail.com.")
+                "All content within the App is the property of the App owner and is protected by intellectual property laws."),
+            Text(
+              "8. Limitation of Liability:",
+              style: TextStyle(color: Colors.red, fontSize: 17),
+            ),
+            Text(
+                "AThe App owner is not liable for any damages arising from the use of the App. Use the App at your own risk."),
+            Text(
+              "8.Changes to Terms:",
+              style: TextStyle(color: Colors.red, fontSize: 17),
+            ),
+            Text(
+                "The App owner reserves the right to update these terms and conditions. Users will be notified of significant changes.")
           ],
         ),
       ),

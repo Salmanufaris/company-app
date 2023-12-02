@@ -1,36 +1,38 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
+
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-import 'package:app/screens/detailpage.dart';
-import 'package:app/screens/editpage.dart';
+import 'package:app/screens/detail_page.dart';
+import 'package:app/screens/edit_page.dart';
 import 'package:flutter/material.dart';
 
-class Lowscreen extends StatefulWidget {
+class Bestscreen extends StatefulWidget {
   final String companyname;
-  const Lowscreen({super.key, required this.companyname});
+  const Bestscreen({super.key, required this.companyname});
 
   @override
-  State<Lowscreen> createState() => _LowscreenState();
+  State<Bestscreen> createState() => _BestscreenState();
 }
 
-class _LowscreenState extends State<Lowscreen> {
+class _BestscreenState extends State<Bestscreen> {
+  List<EmployeeModel> filteredEmployeList = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange[400],
         body: Builder(builder: (context) {
           return ValueListenableBuilder(
             valueListenable: employeeListNotifier,
             builder: (BuildContext ctx, List<EmployeeModel> employeeList,
                 Widget? child) {
-              final filteredEmployeeList = employeeList
-                  .where(
-                      (employee) => employee.category?.contains('Low') == true)
+              final filteredEmployeList = employeeList
+                  .where((Employe) => Employe.category.contains('Best') == true)
                   .toList();
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  final data = filteredEmployeeList[index];
+                  final data = filteredEmployeList[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -46,7 +48,7 @@ class _LowscreenState extends State<Lowscreen> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      color: Colors.orange[100],
+                      color: Colors.lightBlueAccent[100],
                       child: ListTile(
                         title: Text(
                           data.name,
@@ -71,43 +73,41 @@ class _LowscreenState extends State<Lowscreen> {
                               width: 6,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => EditScreen(
-                                          companyname: "",
-                                          category: data.category,
-                                          email: data.email,
-                                          gender: data.gender,
-                                          image: data.image,
-                                          index: index,
-                                          name: data.name,
-                                          number: data.number,
-                                        )));
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.black,
-                              ),
-                            ),
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => EditScreen(
+                                            companyname: "",
+                                            category: data.category,
+                                            email: data.email,
+                                            gender: data.gender,
+                                            image: data.image,
+                                            index: index,
+                                            name: data.name,
+                                            number: data.number,
+                                          )));
+                                },
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.black,
+                                )),
                             const SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                _showDeleteDialog(context, index);
-                              },
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                            ),
+                                onTap: () {
+                                  _showDeleteDialog(context, index);
+                                },
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                )),
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-                itemCount: filteredEmployeeList.length,
+                itemCount: filteredEmployeList.length,
               );
             },
           );
@@ -139,7 +139,10 @@ void _showDeleteDialog(BuildContext context, int index) {
               deleteemployee(index);
               Navigator.of(context).pop();
             },
-            child: const Text("Yes"),
+            child: const Text(
+              "Yes",
+              style: TextStyle(color: Colors.red),
+            ),
           ),
         ],
       );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:app/screens/aboutpage.dart';
-import 'package:app/screens/logoutscreen.dart';
-import 'package:app/screens/resetscreen.dart';
-import 'package:app/screens/terms.dart';
+import 'package:app/screens/about_page.dart';
+import 'package:app/screens/logout_screen.dart';
+import 'package:app/screens/reset_screen.dart';
+import 'package:app/screens/terms_page.dart';
 
 class SettingsScreen extends StatelessWidget {
   final String companyname;
@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.orange[200],
+          backgroundColor: Colors.cyan[400],
           title: const Text(
             "Settings",
             style: TextStyle(color: Colors.black),

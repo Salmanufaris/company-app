@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-import 'package:app/screens/add.dart';
-import 'package:app/screens/detailpage.dart';
-import 'package:app/screens/editpage.dart';
+import 'package:app/screens/add_screen.dart';
+import 'package:app/screens/detail_page.dart';
+import 'package:app/screens/edit_page.dart';
 
 class HomeScreen extends StatefulWidget {
   final EmployeeModel employee;
@@ -34,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.orange[200],
+          backgroundColor: Colors.cyan[400],
         ),
-        backgroundColor: Colors.orange[400],
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -45,9 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 270,
                   width: 400,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.orange[600],
-                  ),
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.cyan[800]),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -58,14 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 230,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.orange[400]),
+                            color: Colors.lightBlue[200]),
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             widget.companyname,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: 30,
                         width: 320,
-                        color: Colors.orange[600],
+                        color: Colors.cyan[800],
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.orange,
+                                backgroundColor: Colors.lightBlueAccent[100],
                               ),
                               child: const Text(
                                 "Add",
@@ -111,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 400,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.orange[600],
+                    color: Colors.white,
                   ),
                   child: Builder(
                     builder: (context) {
@@ -128,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  color: Colors.orange[100],
+                                  color: Colors.lightBlueAccent[100],
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(

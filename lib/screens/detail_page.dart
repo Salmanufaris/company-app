@@ -30,9 +30,8 @@ class _DetailscreenState extends State<Detailscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange[400],
         appBar: AppBar(
-          backgroundColor: Colors.yellow[200],
+          backgroundColor: Colors.cyan[400],
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop(true);
@@ -66,7 +65,7 @@ class _DetailscreenState extends State<Detailscreen> {
                     ),
                     borderRadius: BorderRadius.circular(19),
                     border: Border.all(
-                      color: Colors.white, // Border color
+                      color: Colors.cyan, // Border color
                       width: 4, // Border width
                     ),
                   ),
@@ -81,7 +80,7 @@ class _DetailscreenState extends State<Detailscreen> {
                     width: 370,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
+                      color: Colors.cyan[400],
                     ),
                     child: Column(
                       children: [

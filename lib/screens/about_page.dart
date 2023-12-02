@@ -28,55 +28,77 @@ class _AboutScreenState extends State<AboutScreen> {
               style: TextStyle(color: Colors.black),
             ),
             centerTitle: true,
-            backgroundColor: Colors.orange[200],
+            backgroundColor: Colors.cyan[400],
           ),
           body: const SingleChildScrollView(
             child: Column(children: [
               SizedBox(
                 height: 10,
               ),
-              Text(
-                "Company App",
-                style: TextStyle(color: Colors.red, fontSize: 17),
-              ),
               SizedBox(
                 height: 5,
               ),
-              Text("version 1.00"),
-              SizedBox(
-                height: 10,
-              ),
               Text(
-                "Description",
+                "App Description:",
                 style: TextStyle(color: Colors.red, fontSize: 17),
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                  "TeamInsight is your all-in-one solution for seamless employee data management. Categorize performance effortlessly into Best, Average , and Low to gain quick insights. Customize categories, set goals, and track progress with ease"),
+                  "Welcome to our Employee Performance Management App, designed to streamline and enhance the way your company manages employee details and assesses performance. "),
               Text(
                 "key features",
                 style: TextStyle(color: Colors.red, fontSize: 17),
               ),
               Text(
-                "> Employee data management",
+                "> Employee Details",
                 style: TextStyle(color: Colors.blue),
               ),
               Text(
-                  "Efficiently store and organize your employee data in a secure and user-friendly platform"),
+                  "Store essential employee information, including name, gender, category, email, percentage, and an image for quick identification."),
               Text(
-                "> Performance Metrics at a Glance",
+                "> Performance Categorization",
                 style: TextStyle(color: Colors.blue),
               ),
               Text(
-                  "TeamInsight provides a visual representation of employee performance through easy-to-read charts and graphs"),
+                  "Automatically categorize employee performance into three levels: Best,Average, and Low based on predefined criteria or performance metrics."),
               Text(
-                "> Customized Performance Categories",
+                "> Percentage Calculation:",
                 style: TextStyle(color: Colors.blue),
               ),
               Text(
                   "Tailor the performance categories to align with your company's unique evaluation criteria. Beyond Best ,Average, and Low,."),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "> Search and Edit:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              Text(
+                "> Interactive User Interface:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              Text(
+                "> Detail and Edit Pages:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              Text(
+                ">Employee Deletion:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              Text(
+                "Chart Visualization:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              Text(
+                "> Visual Feedback:",
+                style: TextStyle(color: Colors.blue),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 "Contact Us",
                 style: TextStyle(color: Colors.red, fontSize: 17),

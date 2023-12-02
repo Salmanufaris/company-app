@@ -1,5 +1,5 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/detailpage.dart';
+import 'package:app/screens/detail_page.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeSearch extends SearchDelegate {
@@ -68,6 +68,7 @@ class EmployeeSearch extends SearchDelegate {
       itemCount: searchResults.length,
       itemBuilder: (context, index) {
         final data = searchResults[index];
+        // ignore: unused_local_variable
         final originalIndex = employeeList.indexOf(data);
 
         return ListTile(

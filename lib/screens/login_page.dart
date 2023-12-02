@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:app/main.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _LoginState extends State<Loginscreen> {
       {bool isUsername = false}) {
     var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(18),
-      borderSide: const BorderSide(color: Colors.black),
+      borderSide: const BorderSide(color: Colors.cyan),
     );
 
     return TextFormField(
@@ -67,7 +69,6 @@ class _LoginState extends State<Loginscreen> {
           return null;
         }
       },
-      obscureText: isUsername,
     );
   }
 
@@ -82,8 +83,8 @@ class _LoginState extends State<Loginscreen> {
       },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.cyan,
+        foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 16),
       ),
       child: const SizedBox(

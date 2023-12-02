@@ -1,6 +1,7 @@
 import 'package:app/db/functions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _ChartState extends State<Chart> {
       length: 1,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange[300],
+          backgroundColor: Colors.cyan[400],
           title: const Text(
             'chart',
             style: TextStyle(color: Colors.black),
@@ -45,6 +46,10 @@ class _ChartState extends State<Chart> {
 }
 
 Widget chartt({required skill}) {
+  if (skill.isEmpty) {
+    return EmptyChart(); // Show Lottie animation if skill list is empty
+  }
+
   Map<String, Color> categoryColors = {
     'Best': Colors.red,
     'Average': Colors.black,
@@ -154,4 +159,18 @@ Widget chartt({required skill}) {
       ),
     ],
   );
+}
+
+// ignore: use_key_in_widget_constructors
+class EmptyChart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Lottie.asset(
+        'assets/images/chart.json', // Replace with the path to your Lottie animation
+        height: 200,
+        width: 200,
+      ),
+    );
+  }
 }

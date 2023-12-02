@@ -2,33 +2,34 @@ import 'dart:io';
 
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-import 'package:app/screens/detailpage.dart';
-import 'package:app/screens/editpage.dart';
+import 'package:app/screens/detail_page.dart';
+import 'package:app/screens/edit_page.dart';
 import 'package:flutter/material.dart';
 
-class Bestscreen extends StatefulWidget {
+class Averagescreen extends StatefulWidget {
   final String companyname;
-  const Bestscreen({super.key, required this.companyname});
+  const Averagescreen({super.key, required this.companyname});
 
   @override
-  State<Bestscreen> createState() => _BestscreenState();
+  State<Averagescreen> createState() => _AveragescreenState();
 }
 
-class _BestscreenState extends State<Bestscreen> {
+class _AveragescreenState extends State<Averagescreen> {
   List<EmployeeModel> filteredEmployeList = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange[400],
         body: Builder(builder: (context) {
           return ValueListenableBuilder(
             valueListenable: employeeListNotifier,
             builder: (BuildContext ctx, List<EmployeeModel> employeeList,
                 Widget? child) {
               final filteredEmployeList = employeeList
+                  // ignore: non_constant_identifier_names
                   .where(
-                      (Employe) => Employe.category?.contains('Best') == true)
+                      // ignore: non_constant_identifier_names
+                      (Employe) => Employe.category.contains('Average') == true)
                   .toList();
               return ListView.builder(
                 itemBuilder: (ctx, index) {
@@ -48,7 +49,7 @@ class _BestscreenState extends State<Bestscreen> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      color: Colors.orange[100],
+                      color: Colors.lightBlueAccent[100],
                       child: ListTile(
                         title: Text(
                           data.name,
@@ -139,7 +140,10 @@ void _showDeleteDialog(BuildContext context, int index) {
               deleteemployee(index);
               Navigator.of(context).pop();
             },
-            child: const Text("Yes"),
+            child: const Text(
+              "Yes",
+              style: TextStyle(color: Colors.red),
+            ),
           ),
         ],
       );

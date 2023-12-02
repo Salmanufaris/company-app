@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 
 Future<void> resetAndClearData(BuildContext context) async {
-  // ignore: unused_local_variable
+  // ignore: unused_local_variable, prefer_typing_uninitialized_variables
   var companyname;
   // ignore: unused_local_variable
   bool confirmReset = await showDialog(
@@ -16,7 +16,7 @@ Future<void> resetAndClearData(BuildContext context) async {
           style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
         ),
         content: const Text(
-          "This will reset the App. Your data will be cleared. Do you want to continue?",
+          "This will reset the App. Your data will  clear. Do you want to continue?",
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
         actions: <Widget>[

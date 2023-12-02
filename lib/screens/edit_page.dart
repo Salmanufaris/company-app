@@ -159,7 +159,6 @@ class _EditScreenState extends State<EditScreen> {
                         iconEnabledColor: Colors.black,
                         underline: Container(color: Colors.white),
                         value: dropdownvalue,
-                        dropdownColor: Colors.teal[300],
                         borderRadius: BorderRadius.circular(40),
                         icon: const Icon(Icons.keyboard_arrow_down),
                         items: items.map((String item) {
@@ -193,18 +192,30 @@ class _EditScreenState extends State<EditScreen> {
                       return null;
                     },
                   ),
-                  _buildTextFormField(
-                    controller: _numberController,
-                    hintText: "+91",
-                    prefixIcon: const Icon(Icons.phone),
-                    maxLength: 10,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    ],
-                    keyboardType: TextInputType.number,
-                    validator: (value) => value == null || value.isEmpty
-                        ? "Field is empty"
-                        : null,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      controller: _numberController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.percent),
+                        hintText: "percentage",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a percentage';
+                        }
+                        double enteredValue =
+                            double.tryParse(value.replaceAll('%', '')) ?? -1;
+
+                        if (enteredValue < 0 || enteredValue > 100) {
+                          return 'Please enter a valid percentage between 0% and 100%';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -217,7 +228,6 @@ class _EditScreenState extends State<EditScreen> {
                         iconEnabledColor: Colors.red,
                         underline: Container(color: Colors.white),
                         value: categoryDropdownValue,
-                        dropdownColor: Colors.teal[300],
                         borderRadius: BorderRadius.circular(40),
                         icon: const Icon(Icons.keyboard_arrow_down),
                         items: categoryItems.map((String item) {
@@ -321,27 +331,49 @@ class _EditScreenState extends State<EditScreen> {
         index: widget.index,
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Updated Successfully',
-            style: TextStyle(color: Colors.white),
+      if (_isEmployeeChanged(updatedEmployee)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Updated Successfully',
+              style: TextStyle(color: Colors.black),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.cyan,
           ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.black,
-        ),
-      );
+        );
 
-      editemployee(widget.index, updatedEmployee);
+        editemployee(widget.index, updatedEmployee);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => BottomBar1(
-            companyname: widget.companyname,
-            updatedImage: widget.image,
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BottomBar1(
+              companyname: widget.companyname,
+              updatedImage: widget.image,
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'No changes made',
+              style: TextStyle(color: Colors.black),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.cyan,
+          ),
+        );
+      }
     }
+  }
+
+  bool _isEmployeeChanged(EmployeeModel updatedEmployee) {
+    return updatedEmployee.name != widget.name ||
+        updatedEmployee.gender != widget.gender ||
+        updatedEmployee.email != widget.email ||
+        updatedEmployee.number != widget.number ||
+        updatedEmployee.category != widget.category ||
+        updatedEmployee.image != widget.image;
   }
 }

@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:app/Model/data_model.dart';
 import 'package:app/db/functions.dart';
-import 'package:app/screens/detailpage.dart';
-import 'package:app/screens/editpage.dart';
-import 'package:app/screens/tabs/allscreenfilter.dart';
+import 'package:app/screens/detail_page.dart';
+import 'package:app/screens/edit_page.dart';
+import 'package:app/screens/tabs/allscreen_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Allscreen extends StatefulWidget {
   final String companyname;
@@ -33,12 +34,13 @@ class _AllscreenState extends State<Allscreen> {
             child: TextButton(
               onPressed: () {
                 showSearch(
-                    context: context,
-                    delegate: EmployeeSearch(
-                      filteredEmployeeList,
-                    ));
+                  context: context,
+                  delegate: EmployeeSearch(
+                    filteredEmployeeList,
+                  ),
+                );
               },
-              child: Text(
+              child: const Text(
                 "search.......",
                 style: TextStyle(fontSize: 16),
               ),
@@ -65,14 +67,16 @@ class _AllscreenState extends State<Allscreen> {
                 filteredEmployeeList = List.from(employeeList);
 
                 return filteredEmployeeList.isEmpty
-                    ? const Center(
-                        child: Text(
-                          "list is empty",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          ),
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset(
+                              'assets/images/listempty.json',
+                              height: 200,
+                              width: 200,
+                            ),
+                          ],
                         ),
                       )
                     : ListView.builder(
@@ -98,7 +102,7 @@ class _AllscreenState extends State<Allscreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              color: Colors.orange[100],
+                              color: Colors.lightBlueAccent[100],
                               child: ListTile(
                                 title: Text(
                                   data.name,
@@ -196,7 +200,7 @@ void _showDeleteDialog(BuildContext context, int index) {
               deleteemployee(index);
               Navigator.of(context).pop();
             },
-            child: const Text("Yes"),
+            child: const Text("Yes", style: TextStyle(color: Colors.red)),
           ),
         ],
       );
