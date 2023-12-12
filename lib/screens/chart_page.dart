@@ -144,7 +144,7 @@ Widget chartt({required skill}) {
                     height: 10,
                     color: color,
                   ),
-                  const SizedBox(width: 10), // Adjust the spacing here
+                  const SizedBox(width: 10),
                   Text(
                     '$category                                per ${percentage.toStringAsFixed(2)}%',
                     style: const TextStyle(
@@ -167,7 +167,7 @@ class EmptyChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
-        'assets/images/chart.json', // Replace with the path to your Lottie animation
+        'assets/images/chart.json',
         height: 200,
         width: 200,
       ),

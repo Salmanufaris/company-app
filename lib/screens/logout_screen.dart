@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable
-
 import 'package:hive/hive.dart';
 import 'package:app/screens/login_page.dart';
 import 'package:flutter/material.dart';

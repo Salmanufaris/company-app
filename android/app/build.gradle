@@ -30,7 +30,7 @@ def keystoreProperties = new Properties()
 
 
 android {
-    namespace "in.bridgeon.Employee_Perfomance"
+    namespace "in.bridgeon.Employ_Perfomance"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -48,7 +48,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "in.bridgeon.Employee_Perfomance"
+        applicationId "in.bridgeon.Employ_Perfomance"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
