@@ -31,4 +31,6 @@ class EmployeeModel {
     required this.category,
     required this.image,
   });
+
+  copyWith({String? image, int? index}) {}
 }

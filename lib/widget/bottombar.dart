@@ -1,77 +1,85 @@
 import 'package:app/Model/data_model.dart';
-import 'package:app/screens/employees_page.dart';
-import 'package:app/screens/chart_page.dart';
-import 'package:app/screens/home_page.dart';
-import 'package:app/screens/settings_screen.dart';
+import 'package:app/controller/bottom_provider.dart';
+import 'package:app/view/chartscreen/chart_page.dart';
+import 'package:app/helpers/colors.dart';
+import 'package:app/view/homescreen/home_page.dart';
+import 'package:app/view/settingscreen/settings_screen.dart';
+import 'package:app/view/employeesbottom/four_screens.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class BottomBar1 extends StatefulWidget {
+class BottomBar1 extends StatelessWidget {
   final String companyname;
+
   const BottomBar1({
     super.key,
     required this.companyname,
-    required String updatedImage,
   });
 
   @override
-  State<BottomBar1> createState() => _BottomBarState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
+      value: Provider.of<BottomBarProvider>(context),
+      child: _BottomBar(
+        companyname: companyname,
+      ),
+    );
+  }
 }
 
-class _BottomBarState extends State<BottomBar1> {
-  int currentindex = 0;
-  List<Widget> screens = [];
-  late Widget currentScreen;
-  @override
-  void initState() {
-    super.initState();
-    screens = [
-      HomeScreen(
-        companyname: widget.companyname,
-        employee: EmployeeModel(
-          name: '',
-          gender: '',
-          email: '',
-          number: '',
-          category: "",
-          image: "",
-        ),
-      ),
-      Employeescreen(companyname: widget.companyname),
-      const Chart(),
-      SettingsScreen(companyname: widget.companyname),
-    ];
-    currentScreen = screens[currentindex];
-  }
+class _BottomBar extends StatelessWidget {
+  final String companyname;
+
+  const _BottomBar({required this.companyname});
 
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<BottomBarProvider>(context, listen: false);
+
     return Scaffold(
-      body: screens[currentindex],
+      body: IndexedStack(
+        index: pro.currentIndex,
+        children: [
+          HomeScreen(
+            companyname: companyname,
+            employee: EmployeeModel(
+              name: '',
+              gender: '',
+              email: '',
+              number: '',
+              category: "",
+              image: "",
+            ),
+          ),
+          EmployeeListScreen(companyname: companyname),
+          const Chart(),
+          SettingsScreen(companyname: companyname),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.cyan[400],
-        currentIndex: currentindex,
+        backgroundColor: MainColours.homebgColor[400],
+        currentIndex: pro.currentIndex,
         onTap: (index) {
-          setState(() {
-            currentindex = index;
-          });
+          pro.updateIndex(index);
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Colors.black,
-              ),
-              label: "Home"),
+            icon: Icon(Icons.home, color: MainColours.bgblack),
+            label: "Home",
+          ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black),
+            icon: Icon(Icons.person, color: MainColours.bgblack),
             label: "Employees",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart, color: Colors.black), label: "Chart"),
+            icon: Icon(Icons.bar_chart, color: MainColours.bgblack),
+            label: "Chart",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings, color: Colors.black),
-              label: "Settings"),
+            icon: Icon(Icons.settings, color: MainColours.bgblack),
+            label: "Settings",
+          ),
         ],
       ),
     );

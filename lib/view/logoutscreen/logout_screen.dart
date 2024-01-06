@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable
 import 'package:hive/hive.dart';
-import 'package:app/screens/login_page.dart';
+import 'package:app/view/loginscreen/login_page.dart';
 import 'package:flutter/material.dart';
 
 Future<void> logoutAndClearData(BuildContext context) async {
@@ -35,10 +35,11 @@ Future<void> logoutAndClearData(BuildContext context) async {
             onPressed: () async {
               await Hive.close();
               await Hive.deleteBoxFromDisk('employee_db');
+
               // ignore: use_build_context_synchronously
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const Loginscreen()),
-              );
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (ctx) => const Loginscreen()),
+                  (route) => false);
             },
           ),
         ],

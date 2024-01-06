@@ -1,19 +1,22 @@
 import 'dart:io';
-import 'package:app/screens/sub/dropdown_things.dart';
-import 'package:app/screens/sub/add_edit_image_email.dart';
+import 'package:app/controller/dbprovider.dart';
+import 'package:app/controller/edit_provider.dart';
+import 'package:app/helpers/add_edit_image_email.dart';
+import 'package:app/helpers/colors.dart';
+import 'package:app/helpers/dropdown_things.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:app/Model/data_model.dart';
-import 'package:app/db/functions.dart';
 import 'package:app/widget/bottombar.dart';
+import 'package:provider/provider.dart';
 
 class EditScreen extends StatefulWidget {
   final String name, gender, email, number, category, image, companyname;
   final int index;
 
   const EditScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.gender,
     required this.email,
@@ -22,94 +25,35 @@ class EditScreen extends StatefulWidget {
     required this.image,
     required this.index,
     required this.companyname,
-  }) : super(key: key);
+  });
 
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  String? pickedImage;
-  bool imageUpdated = false;
-
   @override
   void initState() {
-    _nameController.text = widget.name;
-    _categoryController.text = widget.category;
-    _genderController.text = widget.gender;
-    _emailController.text = widget.email;
-    _numberController.text = widget.number;
-    pickedImage = widget.image;
+    final pro = Provider.of<EditProvider>(context, listen: false);
+    pro.nameController.text = widget.name;
+    pro.categoryController.text = widget.category;
+    pro.genderController.text = widget.gender;
+    pro.emailController.text = widget.email;
+    pro.numberController.text = widget.number;
+    pro.pickedImage = widget.image;
     super.initState();
   }
 
-  // ignore: unused_element
-  Future<void> _pickImage() async {
-    final picked = await Imagebringing.pickImage(ImageSource.gallery);
-    if (picked != null) {
-      setState(() {
-        pickedImage = picked.path;
-        imageUpdated = true;
-      });
-    }
-  }
-
-  Future<void> _pickImageDialog() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text('Which one do you want?'),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  XFile? picked =
-                      await Imagebringing.pickImage(ImageSource.camera);
-                  _updateImage(picked);
-                },
-                child: const Text('Camera'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  XFile? picked =
-                      await Imagebringing.pickImage(ImageSource.gallery);
-                  _updateImage(picked);
-                },
-                child: const Text('Gallery'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _updateImage(XFile? picked) {
-    if (picked != null) {
-      setState(() {
-        pickedImage = picked.path;
-        imageUpdated = true;
-      });
-    }
-  }
-
   final _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<EditProvider>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: MainColours.bgwhite,
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop(true);
@@ -120,7 +64,7 @@ class _EditScreenState extends State<EditScreen> {
             ),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: MainColours.bgwhite,
         body: SingleChildScrollView(
           child: Center(
             child: Form(
@@ -128,14 +72,16 @@ class _EditScreenState extends State<EditScreen> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: _pickImageDialog,
+                    onTap: () {
+                      pro.pickImageDialog(context);
+                    },
                     child: CircleAvatar(
                       radius: 80,
-                      backgroundImage: pickedImage != null
-                          ? FileImage(File(pickedImage!))
+                      backgroundImage: pro.pickedImage != null
+                          ? FileImage(File(pro.pickedImage!))
                           : FileImage(File(widget.image)),
                       backgroundColor: Colors.grey[200],
-                      child: pickedImage == null
+                      child: pro.pickedImage == null
                           ? Icon(
                               Icons.camera_alt,
                               size: 80,
@@ -145,19 +91,19 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                   ),
                   _buildTextFormField(
-                    controller: _nameController,
+                    controller: pro.nameController,
                     hintText: "Name",
                     validator: (value) => value == null || value.isEmpty
                         ? "Field is empty"
                         : null,
                   ),
                   _buildTextFormField(
-                    controller: _genderController,
+                    controller: pro.genderController,
                     hintText: "Click here to select gender",
                     prefix: DropdownButtonHideUnderline(
                       child: DropdownButton(
                         iconEnabledColor: Colors.black,
-                        underline: Container(color: Colors.white),
+                        underline: Container(color: MainColours.bgwhite),
                         value: dropdownvalue,
                         borderRadius: BorderRadius.circular(40),
                         icon: const Icon(Icons.keyboard_arrow_down),
@@ -168,10 +114,8 @@ class _EditScreenState extends State<EditScreen> {
                           );
                         }).toList(),
                         onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                            _genderController.text = newValue;
-                          });
+                          dropdownvalue = newValue!;
+                          pro.genderController.text = newValue;
                         },
                       ),
                     ),
@@ -180,7 +124,7 @@ class _EditScreenState extends State<EditScreen> {
                         : null,
                   ),
                   _buildTextFormField(
-                    controller: _emailController,
+                    controller: pro.emailController,
                     hintText: "Email",
                     prefixIcon: const Icon(Icons.email),
                     validator: (value) {
@@ -195,7 +139,7 @@ class _EditScreenState extends State<EditScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextFormField(
-                      controller: _numberController,
+                      controller: pro.numberController,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.percent),
                         hintText: "percentage",
@@ -226,7 +170,7 @@ class _EditScreenState extends State<EditScreen> {
                       ),
                       DropdownButton(
                         iconEnabledColor: Colors.red,
-                        underline: Container(color: Colors.white),
+                        underline: Container(color: MainColours.bgwhite),
                         value: categoryDropdownValue,
                         borderRadius: BorderRadius.circular(40),
                         icon: const Icon(Icons.keyboard_arrow_down),
@@ -240,10 +184,8 @@ class _EditScreenState extends State<EditScreen> {
                           );
                         }).toList(),
                         onChanged: (String? newValue) {
-                          setState(() {
-                            categoryDropdownValue = newValue!;
-                            _categoryController.text = newValue;
-                          });
+                          categoryDropdownValue = newValue!;
+                          pro.categoryController.text = newValue;
                         },
                       ),
                     ],
@@ -262,7 +204,9 @@ class _EditScreenState extends State<EditScreen> {
                   ),
                   MaterialButton(
                     color: Colors.black,
-                    onPressed: _updateEmployee,
+                    onPressed: () async {
+                      updateEmployee();
+                    },
                     child: const Text(
                       "Save",
                       style: TextStyle(color: Colors.white),
@@ -307,17 +251,18 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
-  void _updateEmployee() {
-    final editedName = _nameController.text.trim();
-    final editedCategory = _categoryController.text.trim();
-    final editedGender = _genderController.text.trim();
-    final editedEmail = _emailController.text.trim();
-    final editedNumber = _numberController.text.trim();
+  void updateEmployee() async {
+    final pro = Provider.of<EditProvider>(context,
+        listen: false); // Get the EditProvider
+    final editedName = pro.nameController.text.trim();
+    final editedCategory = pro.categoryController.text.trim();
+    final editedGender = pro.genderController.text.trim();
+    final editedEmail = pro.emailController.text.trim();
+    final editedNumber = pro.numberController.text.trim();
 
-    String updatedImage = pickedImage ?? widget.image;
-
-    if (imageUpdated && pickedImage != null) {
-      updatedImage = pickedImage!;
+    String updatedImage = pro.pickedImage ?? widget.image;
+    if (pro.imageUpdated && pro.pickedImage != null) {
+      updatedImage = pro.pickedImage!;
     }
 
     if (_formkey.currentState?.validate() ?? false) {
@@ -343,13 +288,16 @@ class _EditScreenState extends State<EditScreen> {
           ),
         );
 
-        editemployee(widget.index, updatedEmployee);
+        // Call the update method from DbProvider
+        await Provider.of<DbProvider>(context, listen: false)
+            .editemployee(widget.index, updatedEmployee);
 
+        // Navigate to the BottomBar1 screen
+        // ignore: use_build_context_synchronously
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => BottomBar1(
               companyname: widget.companyname,
-              updatedImage: widget.image,
             ),
           ),
         );

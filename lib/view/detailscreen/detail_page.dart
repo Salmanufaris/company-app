@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'package:app/helpers/colors.dart';
 import 'package:flutter/material.dart';
 
-class Detailscreen extends StatefulWidget {
+class Detailscreen extends StatelessWidget {
   final String name;
   final String gender;
   final String catogery;
@@ -19,13 +20,9 @@ class Detailscreen extends StatefulWidget {
     required this.number,
     required this.image,
     required this.companyname,
+    required String categery,
   });
 
-  @override
-  State<Detailscreen> createState() => _DetailscreenState();
-}
-
-class _DetailscreenState extends State<Detailscreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,12 +35,14 @@ class _DetailscreenState extends State<Detailscreen> {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: MainColours.bgblack,
             ),
           ),
           title: const Text(
             "Detail Page",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              color: MainColours.bgblack,
+            ),
           ),
           centerTitle: true,
         ),
@@ -60,7 +59,7 @@ class _DetailscreenState extends State<Detailscreen> {
                   width: 160,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: FileImage(File(widget.image)),
+                      image: FileImage(File(image)),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(19),
@@ -76,7 +75,7 @@ class _DetailscreenState extends State<Detailscreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 25),
                   child: Container(
-                    height: 450,
+                    height: 400,
                     width: 370,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -94,7 +93,7 @@ class _DetailscreenState extends State<Detailscreen> {
                             fontSize: 20,
                           ),
                         ),
-                        Text(widget.name),
+                        Text(name),
                         const SizedBox(
                           height: 30,
                         ),
@@ -113,10 +112,7 @@ class _DetailscreenState extends State<Detailscreen> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(widget.gender),
-                            Text(widget.catogery)
-                          ],
+                          children: [Text(gender), Text(catogery)],
                         ),
                         const SizedBox(
                           height: 120,
@@ -136,7 +132,7 @@ class _DetailscreenState extends State<Detailscreen> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [Text(widget.email), Text(widget.number)],
+                          children: [Text(email), Text(number)],
                         ),
                       ],
                     ),

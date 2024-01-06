@@ -35,17 +35,13 @@ Future<void> resetAndClearData(BuildContext context) async {
               style: TextStyle(color: Color.fromARGB(255, 245, 0, 0)),
             ),
             onPressed: () async {
-              await Hive.close();
+              await Hive.box('employee_db').clear();
               await Hive.deleteBoxFromDisk('employee_db');
+              await Hive.close();
 
               // ignore: use_build_context_synchronously
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => const BottomBar1(
-                          companyname: "",
-                          updatedImage: "",
-                        )),
-              );
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => BottomBar1(companyname: companyname)));
             },
           ),
         ],

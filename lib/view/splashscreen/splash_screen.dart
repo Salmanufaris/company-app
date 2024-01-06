@@ -1,12 +1,13 @@
 import 'package:app/main.dart';
-import 'package:app/screens/login_page.dart';
+import 'package:app/helpers/colors.dart';
+import 'package:app/view/loginscreen/login_page.dart';
 import 'package:app/widget/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splashscreen extends StatefulWidget {
-  const Splashscreen({Key? key}) : super(key: key);
+  const Splashscreen({super.key});
 
   @override
   State<Splashscreen> createState() => _MyWidgetState();
@@ -22,15 +23,17 @@ class _MyWidgetState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 200,
-            ),
-            Lottie.asset('assets/images/fvdvd.json'),
-          ],
+      backgroundColor: MainColours.bgblack,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 200,
+              ),
+              Lottie.asset('assets/images/fvdvd.json'),
+            ],
+          ),
         ),
       ),
     );
@@ -54,7 +57,7 @@ class _MyWidgetState extends State<Splashscreen> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (ctx1) => const BottomBar1(
-          updatedImage: "",
+          // updatedImage: "",
           companyname: "welcome back ",
         ),
       ));

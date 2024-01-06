@@ -1,15 +1,11 @@
+import 'package:app/helpers/colors.dart';
 import 'package:flutter/material.dart';
 
-class AboutScreen extends StatefulWidget {
+class AboutScreen extends StatelessWidget {
   final String companyname;
 
   const AboutScreen({super.key, required this.companyname});
 
-  @override
-  State<AboutScreen> createState() => _AboutScreenState();
-}
-
-class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,11 +17,11 @@ class _AboutScreenState extends State<AboutScreen> {
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.black,
+                  color: MainColours.bgblack,
                 )),
             title: const Text(
               "About",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: MainColours.bgblack),
             ),
             centerTitle: true,
             backgroundColor: Colors.cyan[400],

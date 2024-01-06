@@ -1,10 +1,11 @@
-import 'package:app/db/functions.dart';
+import 'package:app/controller/dbprovider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class Chart extends StatefulWidget {
-  const Chart({Key? key}) : super(key: key);
+  const Chart({super.key});
 
   @override
   State<Chart> createState() => _ChartState();
@@ -13,7 +14,8 @@ class Chart extends StatefulWidget {
 class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
-    List skill = employeeListNotifier.value;
+    final prd = Provider.of<DbProvider>(context);
+    List skill = prd.emploList;
     return DefaultTabController(
       initialIndex: 0,
       length: 1,
@@ -38,14 +40,15 @@ class _ChartState extends State<Chart> {
           ),
         ),
         body: TabBarView(
-          children: [chartt(skill: skill)],
+          children: [chartt(skill: skill, context: context)],
         ),
       ),
     );
   }
 }
 
-Widget chartt({required skill}) {
+Widget chartt({required skill, required context}) {
+  final prd = Provider.of<DbProvider>(context);
   if (skill.isEmpty) {
     return EmptyChart(); // Show Lottie animation if skill list is empty
   }
@@ -62,7 +65,7 @@ Widget chartt({required skill}) {
 
   for (int index = 0; index < skill.length; index++) {
     double per = double.parse(skill[index].number);
-    double percentage = (per / calculateTotalchart(skill)) * 100;
+    double percentage = (per / prd.calculateTotalchart(skill)) * 100;
     String category = skill[index].category;
 
     if (categoryValues.containsKey(category)) {
@@ -75,7 +78,7 @@ Widget chartt({required skill}) {
   return Column(
     children: [
       SizedBox(
-        height: 500,
+        height: 300,
         child: Stack(
           alignment: Alignment.center,
           children: [
